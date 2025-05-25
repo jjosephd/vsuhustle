@@ -1,4 +1,4 @@
-# 🐏 VSU Hustle
+#  VSU Hustle
 
 **A peer-to-peer service marketplace for Virginia State University students.**
 
