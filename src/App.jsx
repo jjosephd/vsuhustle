@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router';
 import PrivateRoute from './routes/private-route';
-import Login from './pages/login';
+import Login from './components/login/login';
 import Listings from './pages/listings';
+import Layout from './components/layout';
 
 function App() {
   return (
@@ -10,7 +11,9 @@ function App() {
 
       {/* Private routes */}
       <Route element={<PrivateRoute />}>
-        <Route path="/listings" element={<Listings />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="/listings" element={<Listings />} />
+        </Route>
       </Route>
     </Routes>
   );
