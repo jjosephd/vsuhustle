@@ -1,0 +1,6 @@
+body {
+  background: linear-gradient(45deg, #1195ff, white, #1195ff);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}

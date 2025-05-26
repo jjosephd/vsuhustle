@@ -1,12 +1,18 @@
 import React from 'react';
 import { Outlet } from 'react-router';
-import Navbar from './ui/navbar';
+import Navbar from './ui/nav/navbar';
+import Home from '../pages/home';
 
 const Layout = () => {
   return (
-    <div className="min-h-screen w-full">
-      <header></header>
-      <main></main>
+    <div
+      className="w-screen flex flex-col overflow-x-hidden"
+      data-theme="maintheme"
+    >
+      <header>
+        <Navbar />
+      </header>
+      <main className=""> </main>
       <Outlet />
     </div>
   );

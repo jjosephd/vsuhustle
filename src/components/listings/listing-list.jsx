@@ -47,6 +47,9 @@ const ListingList = () => {
           </p>
           <p className="text-sm text-gray-600 mb-1">Price: {listing.price}</p>
           <p className="text-sm">{listing.description}</p>
+          <p className="text-xs text-gray-500">
+            Posted: {listing.createdAt?.toDate().toLocaleString()}
+          </p>
         </li>
       ))}
     </ul>
