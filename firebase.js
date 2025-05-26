@@ -1,4 +1,4 @@
-//updated to use env variables protection
+//updated to use env variables protection safety
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
