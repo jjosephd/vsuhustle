@@ -22,7 +22,12 @@ const Navbar = () => {
             </div>
             <ul className="links-container flex gap-6 items-center uppercase text-xs">
               <li>
-                <ScrollLink to="/" spy={true} smooth={true} duration={500}>
+                <ScrollLink
+                  to="services"
+                  spy={true}
+                  smooth={true}
+                  duration={500}
+                >
                   Services
                 </ScrollLink>
               </li>
