@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../../../context/auth/AuthContext';
 import LogoutButton from '../../buttons/logout';
 import { Link as ScrollLink } from 'react-scroll';
+import { Link } from 'react-router';
 import { LuCalendarSearch } from 'react-icons/lu';
 
 const Navbar = () => {
@@ -9,7 +10,7 @@ const Navbar = () => {
 
   return (
     <nav className="w-full">
-      <div className="navbar flex justify-between px-4 ">
+      <div className=" navbar flex absolute top-0 left-0 right-0 z-30 bg-transparent justify-between px-4 text-white font-bold ">
         {currentUser ? (
           <>
             {currentUser.email}
@@ -37,16 +38,13 @@ const Navbar = () => {
                 </ScrollLink>
               </li>
               <li className="hidden sm:block">
-                <ScrollLink
-                  to="/listings"
-                  spy={true}
-                  smooth={true}
-                  duration={500}
+                <Link
+                  to="/login"
                   className="btn btn-primary btn-sm border-0 rounded-full text-xs px-8 text-white"
                 >
                   <LuCalendarSearch />
                   Browse Providers
-                </ScrollLink>
+                </Link>
               </li>
             </ul>
           </>

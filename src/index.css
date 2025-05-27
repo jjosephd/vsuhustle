@@ -18,10 +18,3 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-body {
-  background: linear-gradient(45deg, #1194ff8a, white, #f0a604);
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}

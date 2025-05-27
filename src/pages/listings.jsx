@@ -4,7 +4,7 @@ import ListingList from '../components/listings/listing-list';
 
 const Listings = () => {
   return (
-    <div className="mx-auto mt-10 p-4">
+    <div className="w-full max-w-4xl mx-auto mt-10 p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Listings</h1>
       </div>
