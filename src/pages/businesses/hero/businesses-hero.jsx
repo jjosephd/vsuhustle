@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import campusBackgroundImage from '../../../assets/images/campus-bg.jpg';
 import HeroNav from '../nav/hero-nav';
+import SearchBar from '../search/searchbar';
 import { fetchListingsByCategory } from '../../../utils/firestore/listings';
 import { fetchListingsByKeyword } from '../../../utils/firestore/listings';
 
@@ -37,30 +38,7 @@ const BusinessesHero = () => {
         <p className="text-md md:text-2xl mb-6 drop-shadow-md">
           Discover and book services from fellow VSU students near you
         </p>
-
-        <div className="relative w-full md:w-1/2 mx-auto">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleChange}
-            placeholder="Search for services"
-            className="input w-full bg-slate-50 text-gray-800 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline"
-          />
-
-          {/* Results Dropdown */}
-          {searchResults.length > 0 && (
-            <div className="absolute mt-2 w-full bg-white text-left text-black rounded shadow-lg z-50 max-h-60 overflow-y-auto pb-4">
-              {searchResults.map((listing) => (
-                <div
-                  key={listing.id}
-                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  <strong>{listing.title}</strong> – {listing.category}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <SearchBar />
       </div>
       <nav className="absolute bottom-0 w-full z-10">
         <HeroNav />
