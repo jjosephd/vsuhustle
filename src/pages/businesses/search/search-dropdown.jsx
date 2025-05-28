@@ -6,34 +6,28 @@ const SearchDropdown = ({ results }) => {
 
   if (!results.length) return null;
 
+  const renderDropdownItem = (title, content, onClick) => (
+    <div className="hover:bg-gray-100 w-full h-full px-4 py-2 flex flex-col">
+      <h1 className="text-gray-500 text-sm">{title}</h1>
+      <span className="font-semibold text-gray-600" onClick={onClick}>
+        {content}
+      </span>
+    </div>
+  );
+
   return (
     <div className="absolute mt-2 w-full bg-white text-left text-black rounded shadow-lg z-50 max-h-60 overflow-y-auto pb-4">
       {results.map((listing) => (
-        <div
-          key={listing.id}
-          className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-        >
-          {/* Business link */}
+        <div key={listing.id} className="py-2 cursor-pointer">
           <div className="flex flex-col mb-4">
-            <h1 className="text-gray-500 text-sm">Businesses</h1>
-            <span
-              className="font-semibold hover:underline"
-              onClick={() => navigate(`/listings/${listing.id}`)}
-            >
-              {listing.title}
-            </span>
-            <span className="text-xs text-gray-600">{listing.category}</span>
+            {renderDropdownItem('Businesses', listing.title, () =>
+              navigate(`/listings/${listing.id}`)
+            )}
           </div>
-
-          {/* Category link */}
           <div className="flex flex-col">
-            <h1 className="text-gray-500 text-sm">Categories</h1>
-            <span
-              className="font-semibold text-gray-600 hover:underline"
-              onClick={() => navigate(`/category/${listing.category}`)}
-            >
-              {listing.category}
-            </span>
+            {renderDropdownItem('Categories', listing.category, () =>
+              navigate(`/category/${listing.category}`)
+            )}
           </div>
         </div>
       ))}
