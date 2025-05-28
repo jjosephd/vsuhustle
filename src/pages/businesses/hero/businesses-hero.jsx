@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import campusBackgroundImage from '../../../assets/images/campus-bg.jpg';
 import HeroNav from '../nav/hero-nav';
 import SearchBar from '../search/searchbar';
-import { fetchListingsByCategory } from '../../../utils/firestore/listings';
 import { fetchListingsByKeyword } from '../../../utils/firestore/listings';
 
 const BusinessesHero = () => {
@@ -17,10 +16,6 @@ const BusinessesHero = () => {
 
     fetchListingsByKeyword(searchTerm).then(setSearchResults);
   }, [searchTerm]);
-
-  const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
 
   return (
     <section
