@@ -4,8 +4,8 @@ import { NavLink } from 'react-router';
 
 const HeroNav = () => {
   return (
-    <div className="px-16 py-8">
-      <ul className="flex justify-between text-white font-bold text-sm">
+    <div className="px-4 py-6 overflow-x-auto">
+      <ul className="flex gap-6 sm:justify-between text-white font-bold text-sm whitespace-nowrap min-w-max">
         {navLinks.map((link) => (
           <li key={link.name}>
             <NavLink
