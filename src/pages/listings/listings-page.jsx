@@ -62,6 +62,13 @@ const ListingsPage = () => {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold">{listing.title}</h1>
+      <div className="mt-4 w-full max-w-[800px] max-h-[600px]">
+        <img
+          src={listing.imageUrl}
+          alt={listing.title || 'Listing image'}
+          className="w-full h-auto object-cover rounded-md"
+        />
+      </div>
       <p className="text-gray-600 mt-2">{listing.category}</p>
       <p className="mt-4">{listing.description}</p>
     </div>
