@@ -35,12 +35,19 @@ const ListingList = () => {
   if (listings.length === 0) return <p>No listings found.</p>;
 
   return (
-    <ul className="space-y-4">
+    <ul className="flex gap-2 ">
       {listings.map((listing) => (
         <li
           key={listing.id}
-          className="border rounded-lg p-4 shadow-sm hover:shadow-md"
+          className="border border-gray-700/20 w-xs rounded-lg p-4 shadow-sm hover:shadow-md"
         >
+          <img
+            src={listing.imageUrl}
+            alt={listing.title}
+            className="h-50 w-full object-cover mb-2 rounded-xl"
+            loading="lazy"
+          />
+          {console.log(listing.imageUrl)}
           <h2 className="text-lg font-semibold">{listing.title}</h2>
           <p className="text-sm text-gray-600 mb-1">
             Category: {listing.category}
