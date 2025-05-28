@@ -22,7 +22,7 @@ const BusinessesHero = () => {
         <input
           type="text"
           placeholder="Search for services"
-          className="input w-full text-gray-800 md:w-1/2 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline focus:border-0"
+          className="input w-full bg-slate-50 text-gray-800 md:w-1/2 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline focus:border-0"
         />
       </div>
       <nav className="absolute bottom-0 w-full z-50">

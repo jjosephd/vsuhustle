@@ -48,13 +48,11 @@ const ListingList = () => {
             loading="lazy"
           />
           {console.log(listing.imageUrl)}
-          <h2 className="text-lg font-semibold">{listing.title}</h2>
-          <p className="text-sm text-gray-600 mb-1">
-            Category: {listing.category}
-          </p>
-          <p className="text-sm text-gray-600 mb-1">Price: {listing.price}</p>
-          <p className="text-sm">{listing.description}</p>
-          <p className="text-xs text-gray-500">
+          <h2 className="text-sm font-semibold">{listing.title}</h2>
+          <p className="text-sm mb-1">Category: {listing.category}</p>
+          <p className="text-sm mb-1">Price: {listing.price}</p>
+          <p className="text-xs pb-6">{listing.description}</p>
+          <p className="text-xs text-gray-500 absolute bottom-1 pb-1">
             Posted: {listing.createdAt?.toDate().toLocaleString()}
           </p>
         </li>
