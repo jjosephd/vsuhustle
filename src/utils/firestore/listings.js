@@ -1,4 +1,11 @@
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+} from 'firebase/firestore';
 import { db } from '../../firebase';
 
 /**
@@ -58,5 +65,29 @@ export const fetchListingsByKeyword = async (keyword) => {
   } catch (err) {
     console.error('Failed to fetch listings by keyword:', err);
     throw err;
+  }
+};
+
+export const fetchListingById = async (id) => {
+  // Guard against undefined/null/empty id
+  if (!id || typeof id !== 'string' || id.trim() === '') {
+    throw new Error('Invalid listing ID provided');
+  }
+
+  try {
+    const docRef = doc(db, 'listings', id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    } else {
+      throw new Error('Listing not found');
+    }
+  } catch (error) {
+    // Re-throw with more context if it's a Firebase error
+    if (error.code) {
+      throw new Error(`Firebase error: ${error.message}`);
+    }
+    throw error;
   }
 };

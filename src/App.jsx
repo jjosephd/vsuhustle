@@ -5,6 +5,7 @@ import Listings from './pages/listings';
 import Layout from './components/layout';
 import Home from './pages/home';
 import Businesses from './pages/businesses/businesses';
+import ListingsPage from './pages/listings/listings-page';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         {/* Private routes */}
         <Route element={<PrivateRoute />}>
           <Route path="/businesses" element={<Businesses />} />
+          <Route path="/listings/:id" element={<ListingsPage />} />
           <Route path="/listings" element={<Listings />} />
         </Route>
       </Route>

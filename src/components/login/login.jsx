@@ -35,7 +35,7 @@ const Login = () => {
           email,
           password
         );
-        navigate('/bussinesses');
+        navigate('/businesses');
         console.log('✅ Login successful:');
         console.log('  UID:', userCredential.user.uid);
         console.log('  Email:', userCredential.user.email);
