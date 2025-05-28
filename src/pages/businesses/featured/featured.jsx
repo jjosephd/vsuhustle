@@ -29,7 +29,7 @@ const Featured = () => {
         {/* Left arrow */}
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 text-4xl text-white hover:cursor-pointer px-2  rounded-full border-0"
+          className="absolute -left-10 top-1/2 -translate-y-1/2 z-20 text-6xl text-white hover:cursor-pointer px-2  rounded-full border-0"
         >
           <FaCircleArrowLeft className="bg-black rounded-full border-0" />
         </button>
@@ -37,7 +37,7 @@ const Featured = () => {
         {/* Right arrow */}
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 text-4xl text-white hover:cursor-pointer px-2  rounded-full border-0 "
+          className="absolute -right-10 top-1/2 -translate-y-1/2 z-20 text-6xl text-white hover:cursor-pointer px-2  rounded-full border-0 "
         >
           <FaCircleArrowRight className="bg-black rounded-full border-0" />
         </button>
