@@ -1,12 +1,18 @@
 @import 'tailwindcss';
 @plugin "daisyui" {
   themes: light --default, dark;
+  root: ':root';
+  include: ;
+  exclude: ;
+  prefix: ;
+  logs: true;
 }
 @plugin "daisyui/theme" {
   name: 'maintheme';
 
-  --color-primary: '#1195FF';
-  --color-secondary: '#e26e11';
+  --color-primary: '#0A519F';
+  --color-secondary: '#E26E11';
+  --color-trojan-blue: '#0A519F';
 }
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

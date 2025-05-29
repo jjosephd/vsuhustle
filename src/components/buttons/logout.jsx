@@ -13,7 +13,10 @@ const LogoutButton = () => {
   if (!currentUser) return null;
 
   return (
-    <button onClick={handleLogout} className="btn">
+    <button
+      onClick={handleLogout}
+      className="btn w-full text-secondary text-xs"
+    >
       Logout
     </button>
   );

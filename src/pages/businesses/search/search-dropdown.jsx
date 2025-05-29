@@ -17,20 +17,45 @@ const SearchDropdown = ({ results }) => {
 
   return (
     <div className="absolute mt-2 w-full bg-white text-left text-black rounded shadow-lg z-50 max-h-60 overflow-y-auto pb-4">
-      {results.map((listing) => (
-        <div key={listing.id} className="py-2 cursor-pointer">
-          <div className="flex flex-col mb-4">
-            {renderDropdownItem('Businesses', listing.title, () =>
-              navigate(`/listings/${listing.id}`)
-            )}
-          </div>
-          <div className="flex flex-col">
-            {renderDropdownItem('Categories', listing.category, () =>
-              navigate(`/category/${listing.category}`)
-            )}
-          </div>
+      {/* Businesses */}
+      {results.length > 0 && (
+        <div className="flex flex-col mb-4">
+          <span className="px-4 py-2 text-sm text-gray-500 font-medium mb-1">
+            Businesses
+          </span>
+          {results.map((listing) => (
+            <div
+              key={`business-${listing.id}`}
+              className="py-2 px-4 cursor-pointer hover:bg-gray-100"
+              onClick={() => navigate(`/listings/${listing.id}`)}
+            >
+              <span className="text-base font-semibold text-gray-700">
+                {listing.title}
+              </span>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
+
+      {/* Unique Categories */}
+      {results.length > 0 && (
+        <div className="flex flex-col">
+          <span className="px-4 text-sm text-gray-500 font-medium mb-1">
+            Categories
+          </span>
+          {[...new Set(results.map((l) => l.category))].map((category) => (
+            <div
+              key={`category-${category}`}
+              className="py-2 px-4 cursor-pointer hover:bg-gray-100"
+              onClick={() => navigate(`/category/${category}`)}
+            >
+              <span className="text-base font-semibold text-gray-700">
+                {category}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

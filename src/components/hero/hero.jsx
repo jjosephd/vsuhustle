@@ -1,8 +1,11 @@
 import React from 'react';
 import heroImg from '../../assets/images/hero-img.jpg';
 import heroTrainer from '../../assets/images/hero-trainer.jpg';
+import { Link } from 'react-router';
+import { useAuth } from '../../context/auth/AuthContext';
 
 const Hero = () => {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen w-full pt-24">
       <div className="flex flex-col justify-center sm:grid sm:grid-cols-2 place-items-center px-6 w-full h-full">
@@ -15,9 +18,23 @@ const Hero = () => {
             haircuts, tutoring, design work, and more. Discover local talent,
             promote your hustle, or book a fellow Trojan — all in one place.
           </p>
-          <div className="flex gap-4 mt-4">
-            <button className="btn btn-lg btn-primary">Find a Provider</button>
-            <button className="btn btn-lg btn-secondary">Start Earning</button>
+          <div className="flex gap-4 mt-4 justify-center items-center sm:justify-start">
+            <Link to="/businesses">
+              <button className="btn btn-lg btn-primary">Find a Service</button>
+            </Link>
+            {user ? (
+              <Link to="/businesses">
+                <button className="btn btn-lg btn-secondary">
+                  Start Earning
+                </button>
+              </Link>
+            ) : (
+              <Link to="/login">
+                <button className="btn btn-lg btn-secondary">
+                  Start Earning
+                </button>
+              </Link>
+            )}
           </div>
         </div>
         <div className="right-col hidden sm:flex sm:flex-row gap-2">

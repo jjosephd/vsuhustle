@@ -56,7 +56,7 @@ const CategoryPage = () => {
     );
   }
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 pt-24">
       {listings.map((listing) => (
         <div key={listing.id} className="border rounded-lg p-4 shadow-md">
           <h2 className="text-xl font-semibold">{listing.title}</h2>
