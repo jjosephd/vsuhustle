@@ -62,18 +62,27 @@ const ListingsPage = () => {
   const ServicesOffered = ({ name, price, duration }) => {
     return (
       <li>
-        <div className="w-full max-w-5xl py-6 flex justify-between">
-          <div className="service-name">{name}</div>
-          <div className="details-container">
-            <div className="service-price">${price}</div>
-            <div className="service-duration">{duration} min</div>
+        <div className="w-full max-w-5xl py-6 ">
+          <div className="details-container flex justify-between items-center">
+            <div className="service-name">{name}</div>
+            <div className="service-price">${price.toFixed(2)}</div>
           </div>
+
+          <div className="service-duration text-right">{duration} min</div>
         </div>
-        <hr className="my-8 border-t border-gray-200" />
+        <hr className="my-6 border-t border-gray-200" />
       </li>
     );
   };
 
+  /**
+   * Returns a list of <ServicesOffered /> components, one for each service
+   * listed in the `servicesOffered` field of the `listing` object.
+   *
+   *
+   * Object entries are destructured to obtain the name, price, and duration of each service.
+   * If `servicesOffered` is not defined, returns null.
+   */
   const renderServicesOffered = () => {
     if (listing.servicesOffered) {
       return Object.entries(listing.servicesOffered).map(
@@ -92,7 +101,6 @@ const ListingsPage = () => {
 
   return (
     <div className="py-8 px-16">
-      <h1 className="text-3xl font-bold">{listing.title}</h1>
       <div className="mt-4 w-full max-w-[800px] max-h-[600px]">
         <img
           src={listing.imageUrl}
@@ -100,8 +108,14 @@ const ListingsPage = () => {
           className="w-full max-w-4xl h-auto object-cover rounded-md"
         />
       </div>
-      <p className="text-gray-600 mt-2">{listing.category}</p>
-      <p className="mt-4">{listing.description}</p>
+      <div className="details-container">
+        <h1 className="text-3xl font-bold">{listing.title}</h1>
+        <p className="mt-4">{listing.description}</p>
+        <div className="inline-block bg-secondary rounded px-3 py-1 text-xs font-medium text-white">
+          {listing.category}
+        </div>
+      </div>
+
       <ul className="mt-2 max-w-2xl">{renderServicesOffered()}</ul>
     </div>
   );

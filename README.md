@@ -1,4 +1,4 @@
-#  VSU Hustle
+# VSU Hustle
 
 **A peer-to-peer service marketplace for Virginia State University students.**
 
@@ -22,7 +22,7 @@ VSU Hustle is a student-built platform that helps students discover, promote, an
 | ----------- | ---------------------------------------------- |
 | ✅ Week 1   | Planning & UI wireframes                       |
 | ✅ Week 2   | Auth + service listing model                   |
-| 🔄 Week 3   | Browse & search listings                       |
+| 🔄 Week 3   | Browse & search listings (6/10)                |
 | 🔄 Week 4   | Dashboard & file uploads                       |
 | 🛠️ Week 5   | Contact flow & UI polish                       |
 | ⏳ Week 6–7 | Ratings, booking, and deployment               |
@@ -35,9 +35,9 @@ VSU Hustle is a student-built platform that helps students discover, promote, an
 | Layer       | Tools                                                   |
 | ----------- | ------------------------------------------------------- |
 | Frontend    | React (JavaScript) + Tailwind                           |
-| Backend/API | Flask or Firebase (TBD)                                 |
-| Database    | Firestore or PostgreSQL                                 |
-| Auth        | Firebase Auth or Supabase                               |
+| Backend/API | Firebase                                                |
+| Database    | Firestore                                               |
+| Auth        | Firebase Auth                                           |
 | Hosting     | Vercel (Frontend), Render or Firebase Hosting (Backend) |
 
 ---
