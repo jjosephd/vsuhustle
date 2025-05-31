@@ -56,22 +56,24 @@ const CategoryPage = () => {
     );
   }
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 pt-24">
-      {listings.map((listing) => (
-        <div key={listing.id} className="border rounded-lg p-4 shadow-md">
-          <h2 className="text-xl font-semibold">{listing.title}</h2>
-          <p className="text-gray-600">{listing.category}</p>
-          <p className="mt-2">{listing.description}</p>
-          {listing.imageUrl && (
-            <img
-              src={listing.imageUrl}
-              alt={listing.title}
-              className="mt-2 w-full h-48 object-cover rounded"
-            />
-          )}
-        </div>
-      ))}
-    </div>
+    <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 pt-24">
+      {listings.map(({ id, title, category, description, imageUrl }) => {
+        return (
+          <li key={id} className="border rounded-lg p-4 shadow-md">
+            <h2 className="text-xl font-semibold">{title}</h2>
+            <p className="text-gray-600">{category}</p>
+            <p>{description}</p>
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                alt={title}
+                className="mt-2 w-full h-48 object-cover rounded"
+              />
+            )}
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 export default CategoryPage;

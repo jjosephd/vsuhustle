@@ -6,9 +6,11 @@ const SearchDropdown = ({ results }) => {
 
   if (!results.length) return null;
 
-  const renderDropdownItem = (title, content, onClick) => (
-    <div className="hover:bg-gray-100  hover:cursor-pointer w-full h-full px-4 py-2 flex flex-col">
-      <h1 className="text-gray-500 text-sm">{title}</h1>
+  const renderDropdownItem = (key, content, onClick) => (
+    <div
+      key={key}
+      className="hover:bg-gray-100 hover:cursor-pointer w-full h-full px-4 py-2 flex flex-col"
+    >
       <span className="font-semibold text-gray-600" onClick={onClick}>
         {content}
       </span>
@@ -54,7 +56,7 @@ const SearchDropdown = ({ results }) => {
             Categories
           </span>
           {[...new Set(results.map((l) => l.category))].map((category) =>
-            renderDropdownItem('', category, () =>
+            renderDropdownItem(`category-${category}`, category, () =>
               navigate(`/category/${category}`)
             )
           )}

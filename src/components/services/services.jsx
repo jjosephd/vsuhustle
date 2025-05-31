@@ -3,7 +3,7 @@ import ServicesCard from './services-card';
 import { MdPersonSearch } from 'react-icons/md';
 import { LuPartyPopper } from 'react-icons/lu';
 import { MdDashboardCustomize } from 'react-icons/md';
-import { BsFillPeopleFill } from 'react-icons/bs';
+import { PiShareNetworkBold } from 'react-icons/pi';
 
 const cardData = [
   {
@@ -26,9 +26,9 @@ const cardData = [
   },
   {
     id: 4,
-    img: <BsFillPeopleFill />,
-    title: 'Book a VSU Student',
-    body: 'Book a VSU student to help you with a specific task or service.',
+    img: <PiShareNetworkBold />,
+    title: 'Grow Your Network',
+    body: 'Access a larger community of VSU students who share your passions and skills.',
   },
 ];
 const Services = () => {
