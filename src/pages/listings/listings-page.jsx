@@ -93,6 +93,37 @@ const ListingsPage = () => {
     featured,
   } = listing;
 
+  const ListingImage = ({ imageUrl, title }) => (
+    <img
+      src={imageUrl}
+      alt={title || 'Listing image'}
+      className="w-full h-auto object-cover rounded-md"
+    />
+  );
+
+  const ListingDescription = ({ description }) => (
+    <p className="text-sm text-gray-500">{description}</p>
+  );
+
+  const ListingMeta = ({ createdAt, category, featured }) => (
+    <div className="tag-container mt-2 flex items-center">
+      <CategoryTag category={category} />
+      {featured && <FeaturedTag />}
+    </div>
+  );
+
+  const CategoryTag = ({ category }) => (
+    <div className="bg-secondary rounded px-3 py-1 text-xs font-bold text-white">
+      {category}
+    </div>
+  );
+
+  const FeaturedTag = () => (
+    <div className=" bg-success rounded px-3 py-1 text-xs font-bold text-white ml-2">
+      <div className="flex items-center">Featured</div>
+    </div>
+  );
+
   const ServicesOffered = ({ name, price, duration }) => {
     return (
       <li>
@@ -125,17 +156,19 @@ const ListingsPage = () => {
       <div className="review-card w-full max-w-5xl py-6">
         <div className="details-container w-full flex justify-between items-center">
           <div className="reviewer-name">{userId}</div>
-          <div className="reviewer-rating flex flex-row">
-            {[...Array(rating).keys()].map((i) => (
-              <FaStar key={i} className="text-yellow-500" />
-            ))}
+          <div className="rating-container">
+            <div className="reviewer-rating flex flex-row">
+              {[...Array(rating).keys()].map((i) => (
+                <FaStar key={i} className="text-yellow-500" />
+              ))}
+            </div>
+            <div className="review-date text-xs text-gray-500 ">
+              Posted: {createdAt.toDate().toLocaleDateString()}
+            </div>
           </div>
         </div>
         <div className="review-comment">{comment}</div>
 
-        <div className="review-date text-xs text-gray-500 py-4">
-          Posted: {createdAt.toDate().toLocaleString()}
-        </div>
         <hr className="my-2 border-t border-gray-200" />
       </div>
     );
@@ -167,32 +200,19 @@ const ListingsPage = () => {
 
   return (
     <div className="py-8 px-4 max-w-5xl ">
-      <img
-        src={imageUrl}
-        alt={title || 'Listing image'}
-        className="w-full h-auto object-cover rounded-md"
-      />
+      <ListingImage imageUrl={imageUrl} title={title} />
       <div className="info-container">
         <h1 className="text-3xl font-bold">{title}</h1>
-        <div className="container text-sm text-gray-500">
-          <p className="">{description}</p>
-          <p>Uploaded on: {createdAt.toDate().toLocaleDateString()}</p>
-        </div>
-
-        <div className="tag-container mt-2 flex items-center">
-          <div className="bg-secondary rounded px-3 py-1 text-xs font-bold text-white">
-            {category}
-          </div>
-          {featured && (
-            <div className=" bg-success rounded px-3 py-1 text-xs font-bold text-white ml-2">
-              <div className="flex items-center">Featured</div>
-            </div>
-          )}
-        </div>
+        <ListingDescription description={description} />
+        <ListingMeta
+          createdAt={createdAt}
+          category={category}
+          featured={featured}
+        />
       </div>
 
-      <ul className="mt-6">
-        <div className="font-bold text-3xl">Services</div>
+      <ul className="mt-6 ">
+        <div className="font-bold text-3xl py-4">Services</div>
         <hr className="my-2 border-t border-gray-200" />
         {renderServicesOffered()}
       </ul>
@@ -203,7 +223,7 @@ const ListingsPage = () => {
 
       {/* Reviews */}
       <div className="mt-6">
-        <div className="font-bold text-3xl">Reviews</div>
+        <div className="font-bold text-3xl py-4">Reviews</div>
         <hr className="my-2 border-t border-gray-200" />
         {reviews.map((review) => (
           <ReviewCard key={review.id} {...review} />
