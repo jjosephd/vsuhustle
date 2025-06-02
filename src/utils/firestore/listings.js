@@ -5,6 +5,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  orderBy,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -99,7 +100,8 @@ export const fetchReviewsForListing = async (listingId) => {
 
   try {
     const reviewsCollection = collection(db, `listings/${listingId}/reviews`);
-    const snapshot = await getDocs(reviewsCollection);
+    const sortedQuery = query(reviewsCollection, orderBy('createdAt', 'desc'));
+    const snapshot = await getDocs(sortedQuery);
     return snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),

@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { fetchListingById } from '../../utils/firestore/listings';
+import {
+  fetchListingById,
+  fetchReviewsForListing,
+} from '../../utils/firestore/listings';
 import { FaRegBookmark } from 'react-icons/fa';
 import { BiShare } from 'react-icons/bi';
 
@@ -11,6 +14,7 @@ import { Link } from 'react-router';
 const ListingsPage = () => {
   const { id } = useParams(); // Get ID from URL
   const [listing, setListing] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -33,6 +37,18 @@ const ListingsPage = () => {
         setError(error.message || 'Failed to fetch listing');
       } finally {
         setLoading(false);
+      }
+    };
+
+    // Fetch listing when id changes
+
+    // Fetch reviews of the listing
+    const fetchReviews = async () => {
+      try {
+        const reviews = await fetchReviewsForListing(id);
+        setReviews(reviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
       }
     };
 
