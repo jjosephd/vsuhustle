@@ -3,6 +3,10 @@ import { useParams } from 'react-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { fetchListingById } from '../../utils/firestore/listings';
+import { FaRegBookmark } from 'react-icons/fa';
+import { BiShare } from 'react-icons/bi';
+
+import { Link } from 'react-router';
 
 const ListingsPage = () => {
   const { id } = useParams(); // Get ID from URL
@@ -58,19 +62,39 @@ const ListingsPage = () => {
       </div>
     );
   }
+  const {
+    title,
+    description,
+    servicesOffered,
+    imageUrl,
+    category,
+    createdAt,
+    featured,
+  } = listing;
 
   const ServicesOffered = ({ name, price, duration }) => {
     return (
       <li>
         <div className="w-full max-w-5xl py-6 ">
-          <div className="details-container flex justify-between items-center">
+          <div className="details-container w-full flex justify-between items-center">
             <div className="service-name">{name}</div>
             <div className="service-price">${price.toFixed(2)}</div>
           </div>
 
           <div className="service-duration text-right">{duration} min</div>
+          <div className="btn-container flex justify-end">
+            <Link to="/book" className="btn btn-xs btn-secondary font-bold">
+              Book Now
+            </Link>
+            <button className="btn btn-xs btn-primary">
+              <FaRegBookmark />
+            </button>
+            <button className="btn btn-xs btn-primary">
+              <BiShare />
+            </button>
+          </div>
         </div>
-        <hr className="my-6 border-t border-gray-200" />
+        <hr className="my-2 border-t border-gray-200" />
       </li>
     );
   };
@@ -100,23 +124,42 @@ const ListingsPage = () => {
   };
 
   return (
-    <div className="py-8 px-16">
-      <div className="mt-4 w-full max-w-[800px] max-h-[600px]">
-        <img
-          src={listing.imageUrl}
-          alt={listing.title || 'Listing image'}
-          className="w-full max-w-4xl h-auto object-cover rounded-md"
-        />
-      </div>
-      <div className="details-container">
-        <h1 className="text-3xl font-bold">{listing.title}</h1>
-        <p className="mt-4">{listing.description}</p>
-        <div className="inline-block bg-secondary rounded px-3 py-1 text-xs font-medium text-white">
-          {listing.category}
+    <div className="py-8 px-4 max-w-5xl ">
+      <img
+        src={imageUrl}
+        alt={title || 'Listing image'}
+        className="w-full h-auto object-cover rounded-md"
+      />
+      <div className="info-container">
+        <h1 className="text-3xl font-bold">{title}</h1>
+        <div className="container text-sm text-gray-500">
+          <p className="">{description}</p>
+          <p>Uploaded on: {createdAt.toDate().toLocaleDateString()}</p>
+        </div>
+
+        <div className="tag-container mt-2 flex items-center">
+          <div className="bg-secondary rounded px-3 py-1 text-xs font-bold text-white">
+            {category}
+          </div>
+          {featured && (
+            <div className=" bg-success rounded px-3 py-1 text-xs font-bold text-white ml-2">
+              <div className="flex items-center">Featured</div>
+            </div>
+          )}
         </div>
       </div>
 
-      <ul className="mt-2 max-w-2xl">{renderServicesOffered()}</ul>
+      <ul className="mt-6">
+        <div className="font-bold text-3xl">Services</div>
+        <hr className="my-2 border-t border-gray-200" />
+        {renderServicesOffered()}
+      </ul>
+
+      {/* Work Images */}
+
+      {/* Information */}
+
+      {/* Reviews */}
     </div>
   );
 };

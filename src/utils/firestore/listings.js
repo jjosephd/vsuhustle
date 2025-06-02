@@ -91,3 +91,23 @@ export const fetchListingById = async (id) => {
     throw error;
   }
 };
+
+export const fetchReviewsForListing = async (listingId) => {
+  if (!listingId) {
+    throw new Error('Invalid listing ID provided');
+  }
+
+  try {
+    const reviewsCollection = collection(db, `listings/${listingId}/reviews`);
+    const snapshot = await getDocs(reviewsCollection);
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    if (error.code) {
+      throw new Error(`Firebase error: ${error.message}`);
+    }
+    throw error;
+  }
+};
