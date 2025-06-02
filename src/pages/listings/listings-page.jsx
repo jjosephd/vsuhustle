@@ -8,6 +8,7 @@ import {
 } from '../../utils/firestore/listings';
 import { FaRegBookmark } from 'react-icons/fa';
 import { BiShare } from 'react-icons/bi';
+import { FaStar } from 'react-icons/fa';
 
 import { Link } from 'react-router';
 
@@ -17,6 +18,7 @@ const ListingsPage = () => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reviewsError, setReviewsError] = useState(null);
 
   useEffect(() => {
     // Check if id exists before making the API call
@@ -47,11 +49,14 @@ const ListingsPage = () => {
       try {
         const reviews = await fetchReviewsForListing(id);
         setReviews(reviews);
+        console.log(reviews);
       } catch (error) {
         console.error('Error fetching reviews:', error);
+        setReviewsError(error.message || 'Failed to fetch reviews');
       }
     };
 
+    fetchReviews();
     fetchListing();
   }, [id]);
 
@@ -112,6 +117,27 @@ const ListingsPage = () => {
         </div>
         <hr className="my-2 border-t border-gray-200" />
       </li>
+    );
+  };
+
+  const ReviewCard = ({ userId, comment, rating, createdAt }) => {
+    return (
+      <div className="review-card w-full max-w-5xl py-6">
+        <div className="details-container w-full flex justify-between items-center">
+          <div className="reviewer-name">{userId}</div>
+          <div className="reviewer-rating flex flex-row">
+            {[...Array(rating).keys()].map((i) => (
+              <FaStar key={i} className="text-yellow-500" />
+            ))}
+          </div>
+        </div>
+        <div className="review-comment">{comment}</div>
+
+        <div className="review-date text-xs text-gray-500 py-4">
+          Posted: {createdAt.toDate().toLocaleString()}
+        </div>
+        <hr className="my-2 border-t border-gray-200" />
+      </div>
     );
   };
 
@@ -176,6 +202,13 @@ const ListingsPage = () => {
       {/* Information */}
 
       {/* Reviews */}
+      <div className="mt-6">
+        <div className="font-bold text-3xl">Reviews</div>
+        <hr className="my-2 border-t border-gray-200" />
+        {reviews.map((review) => (
+          <ReviewCard key={review.id} {...review} />
+        ))}
+      </div>
     </div>
   );
 };
