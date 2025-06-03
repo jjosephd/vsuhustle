@@ -1,8 +1,11 @@
-import React, { useRef } from 'react';
-import ListingList from '../../../components/listings/listing-list';
+import React, { useRef, useEffect, useState } from 'react';
+import ListingList from '../listings/listing-list';
 import { FaCircleArrowRight, FaCircleArrowLeft } from 'react-icons/fa6';
+import { useNavigate } from 'react-router';
+import { fetchListingById } from '../../utils/firestore/listings';
 
 const Featured = () => {
+  const navigate = useNavigate();
   const scrollRef = useRef(null);
 
   const scrollLeft = () => {

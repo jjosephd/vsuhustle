@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { useNavigate } from 'react-router';
 
 const ListingList = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -40,6 +42,7 @@ const ListingList = () => {
         <li
           key={listing.id}
           className="border border-gray-700/20 w-xs rounded-lg p-4 shadow-sm hover:shadow-md"
+          onClick={() => navigate(`/listings/${listing.id}`)}
         >
           <img
             src={listing.imageUrl}
