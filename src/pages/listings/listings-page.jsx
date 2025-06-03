@@ -165,6 +165,12 @@ const ListingsPage = () => {
     );
   };
 
+  const getAverageRating = () => {
+    if (reviews.length === 0) return 0;
+    const totalScore = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalScore / reviews.length;
+  };
+
   /**
    * Returns a list of <ServicesOffered /> components, one for each service
    * listed in the `servicesOffered` field of the `listing` object.
@@ -212,7 +218,12 @@ const ListingsPage = () => {
         {/* Information */}
         {/* Reviews */}
         <div className="mt-6">
-          <div className="font-bold text-3xl py-4">Reviews</div>
+          <div className="header-container flex justify-between items-center">
+            <div className="font-bold text-3xl py-4">Reviews</div>
+            <div className="average-rating bg-gray-500 font-bold text-white rounded px-3 py-1">
+              <span>Average Rating:</span> {getAverageRating().toFixed(1)}
+            </div>
+          </div>
           <hr className="my-2 border-t border-gray-200" />
           {reviews.map((review) => (
             <ReviewCard key={review.id} {...review} />
