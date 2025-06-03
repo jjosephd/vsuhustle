@@ -13,6 +13,7 @@ import { FaStar } from 'react-icons/fa';
 import { Link } from 'react-router';
 
 import FeaturedTag, { CategoryTag } from '../../components/featured/tags';
+import ContactCard from '../../components/contact/contact-card';
 
 const ListingsPage = () => {
   const { id } = useParams(); // Get ID from URL
@@ -189,35 +190,37 @@ const ListingsPage = () => {
   };
 
   return (
-    <div className="py-8 px-4 max-w-5xl ">
-      <ListingImage imageUrl={imageUrl} title={title} />
-      <div className="info-container">
-        <h1 className="text-3xl font-bold">{title}</h1>
-        <ListingDescription description={description} />
-        <ListingMeta
-          createdAt={createdAt}
-          category={category}
-          featured={featured}
-        />
+    <div className="py-8 px-4 max-w-7xl flex gap-12">
+      <div className="listing-container flex flex-col">
+        {' '}
+        <ListingImage imageUrl={imageUrl} title={title} />
+        <div className="info-container">
+          <h1 className="text-3xl font-bold">{title}</h1>
+          <ListingDescription description={description} />
+          <ListingMeta
+            createdAt={createdAt}
+            category={category}
+            featured={featured}
+          />
+        </div>
+        <ul className="mt-6 ">
+          <div className="font-bold text-3xl py-4">Services</div>
+          <hr className="my-2 border-t border-gray-200" />
+          {renderServicesOffered()}
+        </ul>
+        {/* Work Images */}
+        {/* Information */}
+        {/* Reviews */}
+        <div className="mt-6">
+          <div className="font-bold text-3xl py-4">Reviews</div>
+          <hr className="my-2 border-t border-gray-200" />
+          {reviews.map((review) => (
+            <ReviewCard key={review.id} {...review} />
+          ))}
+        </div>
       </div>
-
-      <ul className="mt-6 ">
-        <div className="font-bold text-3xl py-4">Services</div>
-        <hr className="my-2 border-t border-gray-200" />
-        {renderServicesOffered()}
-      </ul>
-
-      {/* Work Images */}
-
-      {/* Information */}
-
-      {/* Reviews */}
-      <div className="mt-6">
-        <div className="font-bold text-3xl py-4">Reviews</div>
-        <hr className="my-2 border-t border-gray-200" />
-        {reviews.map((review) => (
-          <ReviewCard key={review.id} {...review} />
-        ))}
+      <div className="contact-container w-full max-w-5xl flex flex-col items-center">
+        <ContactCard {...listing} />
       </div>
     </div>
   );
