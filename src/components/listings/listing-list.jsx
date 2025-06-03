@@ -38,13 +38,13 @@ const ListingList = () => {
   if (listings.length === 0) return <p>No listings found.</p>;
 
   return (
-    <ul className="flex flex-row">
+    <ul className="flex flex-row gap-4">
       {listings.map(
         (listing) =>
           listing.featured && (
             <li
               key={listing.id}
-              className="border border-gray-700/20 rounded-lg p-4 shadow-sm hover:shadow-md hover:cursor-pointer"
+              className="max-w-xs border border-gray-700/20 rounded-lg p-4 shadow-sm hover:shadow-md hover:cursor-pointer"
               onClick={() => navigate(`/listings/${listing.id}`)}
             >
               <img
