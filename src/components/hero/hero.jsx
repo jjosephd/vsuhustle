@@ -29,7 +29,7 @@ const Hero = () => {
                 </button>
               </Link>
             ) : (
-              <Link to="/login">
+              <Link to="/businesses/new-service">
                 <button className="btn btn-lg btn-secondary">
                   Start Earning
                 </button>

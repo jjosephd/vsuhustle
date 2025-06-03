@@ -24,7 +24,7 @@ const Featured = () => {
         {/* Scrollable featured listings */}
         <div
           ref={scrollRef}
-          className="featured-listings flex overflow-x-scroll scroll-smooth snap-x snap-mandatory gap-4"
+          className="featured-listings flex overflow-x-scroll scroll-smooth snap-x snap-mandatory gap-4 mx-auto"
         >
           <ListingList />
         </div>
