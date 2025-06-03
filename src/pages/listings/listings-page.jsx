@@ -19,6 +19,7 @@ const ListingsPage = () => {
   const { id } = useParams(); // Get ID from URL
   const [listing, setListing] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [totalReviews, setTotalReviews] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [reviewsError, setReviewsError] = useState(null);
@@ -171,6 +172,9 @@ const ListingsPage = () => {
     return totalScore / reviews.length;
   };
 
+  const toggleTotalReviews = () => {
+    setTotalReviews(!totalReviews);
+  };
   /**
    * Returns a list of <ServicesOffered /> components, one for each service
    * listed in the `servicesOffered` field of the `listing` object.
@@ -220,8 +224,24 @@ const ListingsPage = () => {
         <div className="mt-6">
           <div className="header-container flex justify-between items-center">
             <div className="font-bold text-3xl py-4">Reviews</div>
-            <div className="average-rating bg-gray-500 font-bold text-white rounded px-3 py-1">
-              <span>Average Rating:</span> {getAverageRating().toFixed(1)}
+            <div className="review-score flex flex-col items-center">
+              <div
+                className="average-rating bg-gray-500 font-bold text-white rounded px-3 py-1 text-xs"
+                onClick={() => {
+                  toggleTotalReviews();
+                }}
+              >
+                <span>Average Rating:</span> {getAverageRating().toFixed(1)}
+              </div>
+
+              <span
+                className={`text-xs transition-all ease-in-out duration-100 ${
+                  totalReviews ? '' : 'opacity-0'
+                }`}
+                id="review-count"
+              >
+                {reviews.length > 0 && ` ${reviews.length} reviews`}
+              </span>
             </div>
           </div>
           <hr className="my-2 border-t border-gray-200" />
