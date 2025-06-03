@@ -12,6 +12,8 @@ import { FaStar } from 'react-icons/fa';
 
 import { Link } from 'react-router';
 
+import FeaturedTag, { CategoryTag } from '../../components/featured/tags';
+
 const ListingsPage = () => {
   const { id } = useParams(); // Get ID from URL
   const [listing, setListing] = useState(null);
@@ -109,18 +111,6 @@ const ListingsPage = () => {
     <div className="tag-container mt-2 flex items-center">
       <CategoryTag category={category} />
       {featured && <FeaturedTag />}
-    </div>
-  );
-
-  const CategoryTag = ({ category }) => (
-    <div className="bg-secondary rounded px-3 py-1 text-xs font-bold text-white">
-      {category}
-    </div>
-  );
-
-  const FeaturedTag = () => (
-    <div className=" bg-success rounded px-3 py-1 text-xs font-bold text-white ml-2">
-      <div className="flex items-center">Featured</div>
     </div>
   );
 

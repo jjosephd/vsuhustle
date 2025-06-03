@@ -1,0 +1,12 @@
+export const FeaturedTag = () => (
+  <div className="bg-success rounded px-3 py-1 text-xs font-bold text-white ">
+    <div className="flex items-center">Featured</div>
+  </div>
+);
+export default FeaturedTag;
+
+export const CategoryTag = ({ category }) => (
+  <div className="bg-secondary rounded px-3 py-1 text-xs font-bold text-white">
+    {category}
+  </div>
+);
