@@ -164,15 +164,6 @@ const NewListingForm = () => {
         placeholder="Image URL"
         className="input"
       />
-      <input
-        type="number"
-        name="price"
-        value={listingData.price}
-        onChange={handleInputChange}
-        placeholder="Base Price"
-        className="input"
-      />
-      {formErrors.price && <p className="text-red-500">{formErrors.price}</p>}
 
       {/* Contact Info */}
       <h3 className="font-bold">Contact Info</h3>
