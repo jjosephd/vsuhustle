@@ -1,0 +1,35 @@
+{
+  "category": "Beauty",
+  "contactInfo": {
+    "email": "inbox@business.com",
+    "phone": "8041234567"
+  },
+  "hours": {
+    "monday": {
+      "open": "9:00",
+      "close": "5:00"
+    },
+    "tuesday": {
+      "open": "9:00",
+      "close": "5:00"
+    }
+  },
+  "createdAt": "2025-05-25T18:38:26.000Z",
+  "description": "Get good hair done",
+  "featured": true,
+  "imageUrl": "https://firebasestorage.googleapis.com/v0/b/vsuhustle.firebasestorage.app/o/stock%2Fbarber-stock.jpg?alt=media&token=ef340c3b-08da-4579-9e85-40ffc55aa535",
+  "keywords": ["hair", "salon", "cut", "barber", "retwist", "braids", "style"],
+  "price": 40,
+  "servicesOffered": {
+    "Braiding": {
+      "duration": 60,
+      "price": 170
+    },
+    "Wash": {
+      "duration": 30,
+      "price": 60
+    }
+  },
+  "title": "Debbie's Do's",
+  "userId": "fhfbhfbaf2342"
+}

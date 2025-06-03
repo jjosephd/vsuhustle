@@ -166,7 +166,7 @@ const Navbar = () => {
               className="logo-container font-extrabold text-2xl sm:text-3xl text-white hover:text-gray-100 transition-colors duration-200"
               aria-label="VSUHustle Home"
             >
-              VSUHustle
+              HustleHub
             </Link>
 
             {/* Navigation Links - Centered */}

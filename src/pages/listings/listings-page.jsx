@@ -183,25 +183,23 @@ const ListingsPage = () => {
    * Object entries are destructured to obtain the name, price, and duration of each service.
    * If `servicesOffered` is not defined, returns null.
    */
-  const renderServicesOffered = () => {
-    if (listing.servicesOffered) {
-      return Object.entries(listing.servicesOffered).map(
-        ([name, { price, duration }]) => (
-          <ServicesOffered
-            key={name}
-            name={name}
-            price={price}
-            duration={duration}
-          />
+  const renderServicesOffered = () =>
+    listing.servicesOffered
+      ? Object.entries(listing.servicesOffered).map(
+          ([name, { price, duration }], i) => (
+            <ServicesOffered
+              key={i}
+              name={name}
+              price={price}
+              duration={duration}
+            />
+          )
         )
-      );
-    }
-    return null;
-  };
+      : null;
 
   return (
-    <div className="py-8 px-4 max-w-7xl flex gap-12">
-      <div className="listing-container flex flex-col">
+    <div className="py-8 px-4 max-w-7xl flex flex-wrap mx-auto md:grid md:grid-cols-3 gap-12">
+      <div className="listing-container flex flex-col md:col-span-2">
         {' '}
         <ListingImage imageUrl={imageUrl} title={title} />
         <div className="info-container">
@@ -226,7 +224,8 @@ const ListingsPage = () => {
             <div className="font-bold text-3xl py-4">Reviews</div>
             <div className="review-score flex flex-col items-center">
               <div
-                className="average-rating bg-gray-500 font-bold text-white rounded px-3 py-1 text-xs"
+                aria-label="Average Rating"
+                className="average-rating bg-gray-500 font-bold text-white rounded px-3 py-1 text-xs hover:cursor-pointer"
                 onClick={() => {
                   toggleTotalReviews();
                 }}
