@@ -134,14 +134,17 @@ const NewListingForm = () => {
   };
 
   return (
-    <form className="flex flex-col max-w-2xl gap-4 p-4" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col items-center w-full px-12 md:px-36 gap-4"
+      onSubmit={handleSubmit}
+    >
       <input
         type="text"
         name="title"
         value={listingData.title}
         onChange={handleInputChange}
         placeholder="Business Name"
-        className="input"
+        className="input md:w-2/4"
       />
       {formErrors.title && (
         <p className="text-red-500 text-xs">{formErrors.title}</p>
@@ -152,7 +155,7 @@ const NewListingForm = () => {
         value={listingData.category}
         onChange={handleInputChange}
         placeholder="Category"
-        className="input"
+        className="input md:w-2/4"
       />
       {formErrors.category && (
         <p className="text-red-500 text-xs">{formErrors.category}</p>
@@ -162,7 +165,7 @@ const NewListingForm = () => {
         value={listingData.description}
         onChange={handleInputChange}
         placeholder="Description"
-        className="textarea"
+        className="textarea md:w-2/4"
       />
       {formErrors.description && (
         <p className="text-red-500 text-xs">{formErrors.description}</p>
@@ -173,7 +176,7 @@ const NewListingForm = () => {
         value={listingData.imageUrl}
         onChange={handleInputChange}
         placeholder="Image URL"
-        className="input"
+        className="input md:w-2/4"
       />
 
       {/* Contact Info */}
@@ -183,14 +186,14 @@ const NewListingForm = () => {
         value={listingData.contactInfo.email}
         onChange={(e) => updateContactInfo('email', e.target.value)}
         placeholder="Email"
-        className="input"
+        className="input md:w-2/4"
       />
       <input
         type="tel"
         value={listingData.contactInfo.phone}
         onChange={(e) => updateContactInfo('phone', e.target.value)}
         placeholder="Phone"
-        className="input"
+        className="input md:w-2/4"
       />
 
       {/* Hours */}
@@ -202,6 +205,7 @@ const NewListingForm = () => {
             type="time"
             value={values.open}
             onChange={(e) => updateHours(day, 'open', e.target.value)}
+            className=""
           />
           <input
             type="time"
@@ -315,7 +319,7 @@ const NewListingForm = () => {
       </div>
 
       {/* Submit */}
-      <button type="submit" className="btn btn-success mt-4 w-full">
+      <button type="submit" className="btn btn-success mt-4 w-full md:w-1/4">
         Submit Listing
       </button>
     </form>

@@ -23,7 +23,6 @@ function App() {
           <Route path="/businesses/new-listing" element={<NewListingPage />} />
           <Route path="/listings/:id" element={<ListingsPage />} />
           <Route path="/category/:category" element={<CategoryPage />} />
-          <Route path="/listings" element={<Listings />} />
         </Route>
       </Route>
     </Routes>

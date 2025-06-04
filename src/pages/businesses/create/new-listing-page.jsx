@@ -34,7 +34,7 @@ const NewListingPage = () => {
   };
 
   return (
-    <div>
+    <div className="w-full py-24 bg-gray-100">
       <NewListingForm />
     </div>
   );
