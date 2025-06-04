@@ -85,47 +85,57 @@ const ListingCard = ({
   };
 
   return (
-    <li className="w-4xl border border-gray-700/10 rounded-lg p-4 shadow-sm hover:shadow-md grid sm:grid-cols-2 gap-4">
-      <div className="col-span-1">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="h-full max-h-72 w-full  object-cover mb-2 rounded-xl"
-          loading="lazy"
-        />
-        <div className="view-lisitng">
-          <button
-            className="btn btn-xs btn-primary w-full"
-            onClick={() => navigate(`/listings/${id}`)}
-          >
-            View Listing
-          </button>
+    <li className="w-4xl border border-gray-700/10 rounded-lg p-4 shadow-sm hover:shadow-md">
+      <div className="grid sm:grid-cols-2 gap-4">
+        {/* Left column - Image only */}
+        <div className="col-span-1">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="h-full max-h-72 w-full object-cover rounded-xl"
+            loading="lazy"
+          />
+        </div>
+
+        {/* Right column - All content */}
+        <div className="col-span-1 flex flex-col">
+          <h2 className="text-sm font-semibold mb-2">{title}</h2>
+
+          <p className="text-sm mb-1">
+            Price:{' '}
+            {Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }).format(price)}
+          </p>
+
+          <div className="tag-container flex items-center gap-1 py-1 mb-2">
+            {featured && <FeaturedTag />}
+            <CategoryTag category={category} />
+            <ScoreTag rating={getAverageRating()} />
+          </div>
+
+          <p className="text-xs mb-4">{description}</p>
+
+          <ul className="flex-1">
+            <hr className="my-2 border-t border-gray-200" />
+            {renderServicesOffered()}
+          </ul>
+
+          <p className="text-xs text-gray-500 mb-2">
+            Posted: {new Date(createdAt?.toDate()).toLocaleString()}
+          </p>
         </div>
       </div>
 
-      <div className="col-span-1">
-        <h2 className="text-sm font-semibold">{title}</h2>
-        <p className="text-sm mb-1">
-          Price:{' '}
-          {Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-          }).format(price)}
-        </p>
-        <div className="tag-container flex items-center gap-1 py-1">
-          {featured && <FeaturedTag />}
-          <CategoryTag category={category} />
-          <ScoreTag rating={getAverageRating()} />
-        </div>
-        <p className="text-xs">{description}</p>
-        <ul className="mt-6 ">
-          <hr className="my-2 border-t border-gray-200" />
-          {renderServicesOffered()}
-        </ul>
-
-        <p className="text-xs text-gray-500">
-          Posted: {new Date(createdAt?.toDate()).toLocaleString()}
-        </p>
+      {/* Button outside the grid, spanning full width */}
+      <div className="mt-4">
+        <button
+          className="btn btn-xs btn-primary w-full"
+          onClick={() => navigate(`/listings/${id}`)}
+        >
+          View Listing
+        </button>
       </div>
     </li>
   );
