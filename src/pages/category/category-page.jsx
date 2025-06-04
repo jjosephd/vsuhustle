@@ -5,6 +5,7 @@ import { db } from '../../firebase';
 import { fetchListingsByCategory } from '../../utils/firestore/listings';
 import errorHandler from '../../utils/error/errorHandler';
 import FeaturedTag, { CategoryTag } from '../../components/featured/tags';
+import Grid from '../../components/listings/category/grid';
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -60,51 +61,14 @@ const CategoryPage = () => {
     );
   }
   return (
-    <ul className="max-w-5xl mx-auto flex flex-wrap justify-center gap-4 py-24">
-      {listings.map(
-        ({
-          id,
-          title,
-          category,
-          description,
-          imageUrl,
-          featured,
-          price,
-          createdAt,
-        }) => {
-          return (
-            <li
-              key={id}
-              className="w-xs border border-gray-700/20 rounded-lg p-4 shadow-sm hover:shadow-md hover:cursor-pointer"
-              onClick={() => navigate(`/listings/${id}`)}
-            >
-              <img
-                src={imageUrl}
-                alt={title}
-                className="h-50 w-full object-cover mb-2 rounded-xl"
-                loading="lazy"
-              />
-              <h2 className="text-sm font-semibold">{title}</h2>
-              <p className="text-sm mb-1">
-                Price:{' '}
-                {Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: 'USD',
-                }).format(price)}
-              </p>
-              <p className="text-xs">{description}</p>
-              <div className="tag-container flex items-center gap-1 py-1">
-                <CategoryTag category={category} />
-                {featured && <FeaturedTag />}
-              </div>
-              <p className="text-xs text-gray-500">
-                Posted: {new Date(createdAt?.toDate()).toLocaleString()}
-              </p>
-            </li>
-          );
-        }
-      )}
-    </ul>
+    <>
+      <div className="p-4">
+        <h1 className="max-w-4xl text-2xl mx-auto font-bold mb-4 capitalize pt-12">
+          {category} Services
+        </h1>
+        <Grid listings={listings} />
+      </div>
+    </>
   );
 };
 export default CategoryPage;
