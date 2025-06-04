@@ -10,3 +10,9 @@ export const CategoryTag = ({ category }) => (
     {category}
   </div>
 );
+
+export const ScoreTag = ({ score }) => (
+  <div className="bg-primary rounded px-3 py-1 text-xs font-bold text-white">
+    {score} Rating
+  </div>
+);

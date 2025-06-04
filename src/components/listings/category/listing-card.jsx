@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import FeaturedTag, { CategoryTag } from '../../featured/tags';
+import { fetchReviewsForListing } from '../../../utils/firestore/listings';
+import FeaturedTag, { CategoryTag, ScoreTag } from '../../featured/tags';
 import { Link } from 'react-router';
 import { FaRegBookmark } from 'react-icons/fa';
 import { BiShare } from 'react-icons/bi';
@@ -17,6 +19,29 @@ const ListingCard = ({
   servicesOffered,
 }) => {
   const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
+  const [reviewsError, setReviewsError] = useState(null);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const reviews = await fetchReviewsForListing(id);
+        setReviews(reviews);
+        console.log(reviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+        setReviewsError(error.message || 'Failed to fetch reviews');
+      }
+    };
+
+    fetchReviews();
+  }, [id]);
+
+  const getAverageRating = () => {
+    if (reviews.length === 0) return 0;
+    const totalScore = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalScore / reviews.length;
+  };
 
   const renderServicesOffered = () =>
     servicesOffered
@@ -88,8 +113,9 @@ const ListingCard = ({
           }).format(price)}
         </p>
         <div className="tag-container flex items-center gap-1 py-1">
-          <CategoryTag category={category} />
           {featured && <FeaturedTag />}
+          <CategoryTag category={category} />
+          <ScoreTag score={getAverageRating()} />
         </div>
         <p className="text-xs">{description}</p>
         <ul className="mt-6 ">
