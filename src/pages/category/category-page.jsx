@@ -60,7 +60,7 @@ const CategoryPage = () => {
     );
   }
   return (
-    <ul className="max-w-5xl mx-auto flex flex-wrap gap-4 py-24">
+    <ul className="max-w-5xl mx-auto flex flex-wrap justify-center gap-4 py-24">
       {listings.map(
         ({
           id,
