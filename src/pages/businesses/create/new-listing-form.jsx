@@ -61,6 +61,15 @@ const NewListingForm = () => {
     }));
   };
 
+  const [savedServices, setSavedServices] = useState({});
+
+  const saveService = (serviceName) => {
+    setSavedServices((prev) => ({
+      ...prev,
+      [serviceName]: true,
+    }));
+  };
+
   const updateServicesOffered = (serviceName, field, value) => {
     setListingData((prev) => ({
       ...prev,
@@ -223,30 +232,51 @@ const NewListingForm = () => {
             <strong>{name}</strong>
             <button
               type="button"
-              className="text-red-500"
+              className="text-red-500 text-sm"
               onClick={() => removeService(name)}
             >
               Remove
             </button>
           </div>
-          <input
-            type="number"
-            value={details.price}
-            onChange={(e) =>
-              updateServicesOffered(name, 'price', e.target.value)
-            }
-            placeholder="Price"
-            className="input w-xs"
-          />
-          <input
-            type="number"
-            value={details.duration}
-            onChange={(e) =>
-              updateServicesOffered(name, 'duration', e.target.value)
-            }
-            placeholder="Duration (mins)"
-            className="input"
-          />
+
+          <label htmlFor="price" className="flex flex-col text-xs">
+            <span>Price:</span>
+            <input
+              type="number"
+              value={details.price}
+              onChange={(e) =>
+                updateServicesOffered(name, 'price', e.target.value)
+              }
+              placeholder="Price"
+              className="input w-1/4"
+            />
+          </label>
+
+          <label htmlFor="duration" className="flex flex-col text-xs">
+            <span>Duration (mins):</span>
+            <input
+              type="number"
+              value={details.duration}
+              onChange={(e) =>
+                updateServicesOffered(name, 'duration', e.target.value)
+              }
+              placeholder="Duration (mins)"
+              className="input w-1/4"
+            />
+          </label>
+
+          <div className="flex items-center gap-2 mt-2">
+            <button
+              type="button"
+              onClick={() => saveService(name)}
+              className="btn btn-sm btn-outline btn-primary"
+            >
+              Save
+            </button>
+            {savedServices[name] && (
+              <span className="text-green-600 text-sm">✔ Saved</span>
+            )}
+          </div>
         </div>
       ))}
 
