@@ -159,7 +159,7 @@ const Navbar = () => {
         aria-label="Main navigation"
       >
         <div className="navbar bg-primary shadow-lg">
-          <div className="flex items-center justify-between gap-6 mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between gap-6 w-full px-4 sm:px-6 lg:px-8 py-4">
             {/* Logo */}
             <Link
               to="/"
@@ -170,7 +170,7 @@ const Navbar = () => {
             </Link>
 
             {/* Navigation Links - Centered */}
-            <div className="hidden md:flex items-center justify-center flex-1 space-x-8">
+            <div className="hidden md:flex  ">
               {navItems.map(({ path, label, icon: Icon }) => (
                 <Link
                   key={path}
