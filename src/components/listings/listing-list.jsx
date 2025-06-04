@@ -3,6 +3,7 @@ import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useNavigate } from 'react-router';
 import FeaturedTag, { CategoryTag } from '../featured/tags';
+import { handleError } from '../../utils/error/errorHandler';
 
 const ListingList = () => {
   const [listings, setListings] = useState([]);
@@ -25,7 +26,7 @@ const ListingList = () => {
 
         setListings(data);
       } catch (error) {
-        console.error('Error fetching listings:', error);
+        handleError(error);
       } finally {
         setLoading(false);
       }

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { handleValidationErrors } from '../utils//error/errorHandler';
 
 export default function useListingValidation() {
   const [errors, setErrors] = useState({});
@@ -18,6 +19,11 @@ export default function useListingValidation() {
       newErrors.servicesOffered = 'At least one service is required.';
 
     setErrors(newErrors);
+
+    if (Object.keys(newErrors).length) {
+      handleValidationErrors(newErrors); // show toast errors
+    }
+
     return newErrors;
   };
 

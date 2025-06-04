@@ -7,6 +7,7 @@ import {
 import { auth } from '../../firebase';
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router';
+import { handleError } from '../../utils/error/errorHandler';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -41,8 +42,8 @@ const Login = () => {
         console.log('  Email:', userCredential.user.email);
       }
     } catch (err) {
-      console.error('❌ Auth error:', err.message);
-      setError(err.message);
+      handleError(err, isRegister ? 'Registration failed' : 'Login failed');
+      setError(err.message); // optional: for displaying inline
     }
   };
 
@@ -51,7 +52,6 @@ const Login = () => {
       <h2 className="text-xl font-bold mb-4">
         {isRegister ? 'Register' : 'Login'}
       </h2>
-      {error && <p className="text-red-500 mb-2">{error}</p>}
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           className="border p-2"
