@@ -38,7 +38,7 @@ const ListingCard = ({
   }, [id]);
 
   const getAverageRating = () => {
-    if (reviews.length === 0) return 0;
+    if (reviews.length === 0) return null;
     const totalScore = reviews.reduce((acc, review) => acc + review.rating, 0);
     return totalScore / reviews.length;
   };
@@ -115,7 +115,7 @@ const ListingCard = ({
         <div className="tag-container flex items-center gap-1 py-1">
           {featured && <FeaturedTag />}
           <CategoryTag category={category} />
-          <ScoreTag score={getAverageRating()} />
+          <ScoreTag rating={getAverageRating()} />
         </div>
         <p className="text-xs">{description}</p>
         <ul className="mt-6 ">

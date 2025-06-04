@@ -11,8 +11,17 @@ export const CategoryTag = ({ category }) => (
   </div>
 );
 
-export const ScoreTag = ({ score }) => (
-  <div className="bg-primary rounded px-3 py-1 text-xs font-bold text-white">
-    {score} Rating
-  </div>
-);
+export const ScoreTag = ({ rating }) => {
+  if (rating === null) {
+    return (
+      <div className="bg-primary rounded px-3 py-1 text-xs font-bold text-white">
+        No Reviews
+      </div>
+    );
+  }
+  return (
+    <div className="bg-primary rounded px-3 py-1 text-xs font-bold text-white">
+      {rating} Rating
+    </div>
+  );
+};
