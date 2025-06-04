@@ -48,6 +48,7 @@ VSU Hustle is a platform that empowers VSU students to promote and book on-campu
 | Dashboard / Edit Listings | Planned  |
 | Booking + Messaging       | Coming   |
 | File Uploads              | Coming   |
+| Filtering and Sort By     | Coming   |
 
 ---
 

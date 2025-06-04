@@ -99,15 +99,7 @@ const ListingCard = ({
 
         {/* Right column - All content */}
         <div className="col-span-1 flex flex-col">
-          <h2 className="text-sm font-semibold mb-2">{title}</h2>
-
-          <p className="text-sm mb-1">
-            Price:{' '}
-            {Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            }).format(price)}
-          </p>
+          <h2 className="text-xl font-semibold mb-2">{title}</h2>
 
           <div className="tag-container flex items-center gap-1 py-1 mb-2">
             {featured && <FeaturedTag />}
