@@ -45,16 +45,16 @@ const ListingCard = ({
 
   const renderServicesOffered = () =>
     servicesOffered
-      ? Object.entries(servicesOffered).map(
-          ([name, { price, duration }], i) => (
+      ? Object.entries(servicesOffered)
+          .slice(0, 3)
+          .map(([name, { price, duration }], i) => (
             <ServicesOffered
               key={i}
               name={name}
               price={price}
               duration={duration}
             />
-          )
-        )
+          ))
       : null;
 
   const ServicesOffered = ({ name, price, duration }) => {
