@@ -1,91 +1,114 @@
 # VSU Hustle
 
-**A peer-to-peer service marketplace for Virginia State University students.**
+**A peer-to-peer service marketplace for Virginia State University students**
 
-VSU Hustle is a student-built platform that helps students discover, promote, and book on-campus side hustles — from haircuts and tutoring to flyer design and photography. Built with real VSU student needs in mind, it connects hustlers with their campus community.
-
----
-
-## 📸 Features (MVP)
-
-- 🛍 Browse services by category (Hair, Tutoring, Creative, etc.)
-- 🔍 Search and filter service listings
-- 👤 Student-authenticated login and service posting
-- 📝 Dashboard to manage your listings
-- 📨 Direct inquiry or contact links for buyers
+VSU Hustle is a platform that empowers VSU students to promote and book on-campus side hustles — from haircuts and tutoring to flyer design and photography. Built specifically for the VSU community, it provides a central place for student talent to connect.
 
 ---
 
-## 📅 Roadmap
+## Features
 
-| Phase       | Focus                                          |
+- Mobile-responsive user interface
+- Landing page with dynamic navigation and user login dropdown
+- Business listing pages with contact details, services, and reviews
+- Search functionality:
+  - By name
+  - By category
+  - (Planned: fuzzy search and autocomplete)
+- Category pages that display relevant businesses
+- Featured listings section for high-visibility promotion
+- Keyword and category-based filtering
+- Review system with star ratings, timestamps, and averages
+- New Listing form with:
+  - Title, category, and description
+  - Contact information and business hours
+  - Keyword tagging and image URL
+  - Dynamic service entry with pricing and duration
+- Centralized error handling using toast notifications
+
+---
+
+## Current Progress
+
+| Component/Feature         | Status   |
+| ------------------------- | -------- |
+| Mobile Styling            | Complete |
+| Landing Page              | Complete |
+| Navigation Bar            | Complete |
+| Business Directory        | Complete |
+| Search by Name/Category   | Complete |
+| Fuzzy Matching            | Planned  |
+| Featured Section          | Complete |
+| Category View             | Complete |
+| Listing Details Page      | Complete |
+| New Listing Form          | Complete |
+| Error Handling            | Complete |
+| Authentication            | Set Up   |
+| Review System             | Basic    |
+| Dashboard / Edit Listings | Planned  |
+| Booking + Messaging       | Coming   |
+| File Uploads              | Coming   |
+
+---
+
+## Roadmap
+
+| Week    | Focus                                         |
+| ------- | --------------------------------------------- |
+| Week 1  | Planning, wireframes, project setup           |
+| Week 2  | Auth, model creation, Firestore integration   |
+| Week 3  | Listings display & search features            |
+| Week 4  | Listing form, category-based filtering        |
+| Week 5  | Dashboard, file uploads, autocomplete search  |
+| Week 6+ | Ratings, bookings, student email verification |
+
+---
+
+## Tech Stack
+
+| Layer       | Tools                                          |
 | ----------- | ---------------------------------------------- |
-| ✅ Week 1   | Planning & UI wireframes                       |
-| ✅ Week 2   | Auth + service listing model                   |
-| 🔄 Week 3   | Browse & search listings (6/10)                |
-| 🔄 Week 4   | Dashboard & file uploads                       |
-| 🛠️ Week 5   | Contact flow & UI polish                       |
-| ⏳ Week 6–7 | Ratings, booking, and deployment               |
-| 🧪 Stretch  | Payments, reviews, VSU-only email verification |
+| Frontend    | React (JavaScript), Tailwind CSS               |
+| Backend/API | Firebase SDK                                   |
+| Auth        | Firebase Auth                                  |
+| Database    | Firestore                                      |
+| Hosting     | Vercel (frontend), Firebase Hosting (optional) |
 
 ---
 
-## 🛠 Tech Stack
+## TypeScript Upgrade
 
-| Layer       | Tools                                                   |
-| ----------- | ------------------------------------------------------- |
-| Frontend    | React (JavaScript) + Tailwind                           |
-| Backend/API | Firebase                                                |
-| Database    | Firestore                                               |
-| Auth        | Firebase Auth                                           |
-| Hosting     | Vercel (Frontend), Render or Firebase Hosting (Backend) |
+The MVP is currently written in JavaScript for rapid development. A migration to TypeScript is planned under the `ts-upgrade` branch to improve long-term maintainability and type safety.
 
 ---
 
-## ✏️ Planned Upgrade: TypeScript
+## About the Creator
 
-This MVP is being developed in **JavaScript** for rapid iteration. A TypeScript migration is planned under the `ts-upgrade` branch to improve long-term maintainability.
+> “Many of us at VSU have talents and skills — tutoring, cutting hair, designing — but no streamlined way to promote it. VSU Hustle aims to change that.”
 
----
-
-## 🧑‍🎓 Why VSU Hustle?
-
-> "A lot of us are grinding with skills on the side — cutting hair, doing nails, tutoring, designing, fixing phones — but there's no organized way to promote that on campus. VSU Hustle changes that."
-
-- Jordan Daniel, Creator
-- Bachelor of Computer Science, Virginia State University
+— Jordan Daniel  
+Bachelor of Computer Science, Virginia State University
 
 ---
 
-## 📌 To Do
+## Development Notes
 
-- [ ] Finalize tech stack
-- [ ] Set up project boilerplate
-- [ ] Build listing form + listing viewer
-- [ ] Implement student-only login
-- [ ] Polish responsive design
-
----
-
-## 🙌 Contributing
-
-Right now, this is a solo project. If you're a VSU student or alum and want to contribute (especially designers or testers), DM [@jjosephd on GitHub](https://github.com/jjosephd) or email jdan7808@students.vsu.edu.
+- Centralized error handling using `handleError` and `handleFirebaseError`
+- Firebase integration is modular for future scale
+- React Router v6+ with `useNavigate` and `useParams`
+- Fully mobile responsive and tested across devices
 
 ---
 
-## 🏁 License
+## Contributing
 
-MIT — Open to learn, remix, and build better.
+This project is actively maintained by a VSU student. If you're a student, alum, or supporter who’d like to contribute—especially with design, testing, or writing—please get in touch:
 
-# React + Vite
+- GitHub: [@jjosephd](https://github.com/jjosephd)
+- Email: jdan7808@students.vsu.edu
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+## License
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+MIT License — open for learning, remixing, and improving.
