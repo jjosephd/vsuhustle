@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { handleValidationErrors } from '../utils//error/errorHandler';
+import errorHandler from '../utils/error/errorHandler';
 
 export default function useListingValidation() {
   const [errors, setErrors] = useState({});
@@ -21,7 +21,7 @@ export default function useListingValidation() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length) {
-      handleValidationErrors(newErrors); // show toast errors
+      errorHandler.validation(newErrors); // show toast errors
     }
 
     return newErrors;

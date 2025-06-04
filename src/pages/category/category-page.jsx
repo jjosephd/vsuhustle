@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { fetchListingsByCategory } from '../../utils/firestore/listings';
+import errorHandler from '../../utils/error/errorHandler';
 
 const CategoryPage = () => {
   const { category } = useParams();
@@ -24,7 +25,8 @@ const CategoryPage = () => {
         const fetchedListings = await fetchListingsByCategory(category);
         setListings(fetchedListings);
       } catch (error) {
-        console.error('Error fetching listing:', error);
+        errorHandler.general(error, 'Error fetching listings');
+        console.error('Error fetching listings:', error);
         setError(error.message || 'Failed to fetch listing');
       } finally {
         setLoading(false);

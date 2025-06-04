@@ -7,7 +7,7 @@ import {
 import { auth } from '../../firebase';
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router';
-import { handleError } from '../../utils/error/errorHandler';
+import errorHandler from '../../utils/error/errorHandler';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -42,7 +42,10 @@ const Login = () => {
         console.log('  Email:', userCredential.user.email);
       }
     } catch (err) {
-      handleError(err, isRegister ? 'Registration failed' : 'Login failed');
+      errorHandler.firebase(
+        err,
+        isRegister ? 'Registration failed' : 'Login failed'
+      );
       setError(err.message); // optional: for displaying inline
     }
   };

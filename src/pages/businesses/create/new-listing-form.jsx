@@ -143,7 +143,9 @@ const NewListingForm = () => {
         placeholder="Business Name"
         className="input"
       />
-      {formErrors.title && <p className="text-red-500">{formErrors.title}</p>}
+      {formErrors.title && (
+        <p className="text-red-500 text-xs">{formErrors.title}</p>
+      )}
       <input
         type="text"
         name="category"
@@ -153,7 +155,7 @@ const NewListingForm = () => {
         className="input"
       />
       {formErrors.category && (
-        <p className="text-red-500">{formErrors.category}</p>
+        <p className="text-red-500 text-xs">{formErrors.category}</p>
       )}
       <textarea
         name="description"
@@ -163,7 +165,7 @@ const NewListingForm = () => {
         className="textarea"
       />
       {formErrors.description && (
-        <p className="text-red-500">{formErrors.description}</p>
+        <p className="text-red-500 text-xs">{formErrors.description}</p>
       )}
       <input
         type="url"
@@ -224,7 +226,7 @@ const NewListingForm = () => {
         </button>
       </div>
       {formErrors.servicesOffered && (
-        <p className="text-red-500">{formErrors.servicesOffered}</p>
+        <p className="text-red-500 text-xs">{formErrors.servicesOffered}</p>
       )}
       {Object.entries(listingData.servicesOffered).map(([name, details]) => (
         <div key={name} className="flex flex-col gap-2 border p-2 rounded">
@@ -232,7 +234,7 @@ const NewListingForm = () => {
             <strong>{name}</strong>
             <button
               type="button"
-              className="text-red-500 text-sm"
+              className="text-red-500 text-xs text-sm"
               onClick={() => removeService(name)}
             >
               Remove
@@ -303,7 +305,7 @@ const NewListingForm = () => {
             {kw}
             <button
               type="button"
-              className="text-red-500"
+              className="text-red-500 text-xs"
               onClick={() => removeKeyword(index)}
             >
               ✕

@@ -14,6 +14,7 @@ import { Link } from 'react-router';
 
 import FeaturedTag, { CategoryTag } from '../../components/featured/tags';
 import ContactCard from '../../components/contact/contact-card';
+import errorHandler from '../../utils/error/errorHandler';
 
 const ListingsPage = () => {
   const { id } = useParams(); // Get ID from URL
@@ -28,6 +29,7 @@ const ListingsPage = () => {
     // Check if id exists before making the API call
     if (!id) {
       setError('No listing ID provided');
+      errorHandler.general(error, '');
       setLoading(false);
       return;
     }
@@ -41,6 +43,7 @@ const ListingsPage = () => {
       } catch (error) {
         console.error('Error fetching listing:', error);
         setError(error.message || 'Failed to fetch listing');
+        errorHandler.general(error, 'Error fetching listing');
       } finally {
         setLoading(false);
       }
