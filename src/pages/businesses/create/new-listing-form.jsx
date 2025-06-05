@@ -154,7 +154,7 @@ const NewListingForm = () => {
         name="category"
         value={listingData.category}
         onChange={handleInputChange}
-        className="select md:w-2/4 focus:outline-none"
+        className="menu dropdown bg-base-100 rounded-box w-xs sm:w-2/4 focus:outline-none"
       >
         <option value="">Select a category</option>
         {categories.map((cat) => (
