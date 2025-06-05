@@ -1,0 +1,9 @@
+Immediate Action Steps
+1. Insert setDoc() in handleSubmit. (to post new listings to firebase)
+
+2. Add createdAt, userId, and optionally status fields to listing.
+
+3. Finish the user dashboard to fetch and show user listings.
+
+4. Hook up delete/edit functionality if in scope.
+
