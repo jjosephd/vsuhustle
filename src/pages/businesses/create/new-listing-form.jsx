@@ -360,7 +360,7 @@ const NewListingForm = () => {
             <button
               type="button"
               onClick={() => saveService(name)}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-md hover:bg-primary/95 hover:cursor-pointer transition-colors  focus:outline-none focus:ring-none "
             >
               Save Service
             </button>
