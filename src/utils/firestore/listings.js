@@ -9,6 +9,19 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
+export const fetchAllListings = async () => {
+  try {
+    const snapshot = await getDocs(collection(db, 'listings'));
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (err) {
+    console.error('Error fetching all listings for fuzzy search:', err);
+    return [];
+  }
+};
+
 /**
  * Fetches listings from the Firestore database that match the given category.
  * The category will be matched against the 'category' field in the listings
