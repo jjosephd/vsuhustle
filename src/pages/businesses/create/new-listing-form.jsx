@@ -4,10 +4,11 @@ import { db } from '../../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import useListingValidation from '../../../hooks/useListingValidation';
 import { categories } from '../../../data/categories';
+import { toast } from 'react-toastify';
 
 const NewListingForm = () => {
   const { errors: formErrors, validate, resetErrors } = useListingValidation();
-
+  const navigate = useNavigate();
   const [listingData, setListingData] = useState({
     title: '',
     category: '',
@@ -121,6 +122,33 @@ const NewListingForm = () => {
       servicesOffered: rest,
     }));
   };
+  const clearState = () => {
+    setListingData({
+      title: '',
+      category: '',
+      description: '',
+      contactInfo: {
+        email: '',
+        phone: '',
+      },
+      hours: {
+        monday: { open: '', close: '' },
+        tuesday: { open: '', close: '' },
+        wednesday: { open: '', close: '' },
+        thursday: { open: '', close: '' },
+        friday: { open: '', close: '' },
+        saturday: { open: '', close: '' },
+        sunday: { open: '', close: '' },
+      },
+      imageUrl: '',
+      keywords: [],
+      price: 0,
+      servicesOffered: {},
+    });
+    setNewKeyword('');
+    setNewServiceName('');
+    resetErrors();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,7 +156,26 @@ const NewListingForm = () => {
     if (Object.keys(validation).length === 0) {
       console.log('Submitting to Firestore:', listingData);
       // TODO: Call your Firestore write logic here
+      clearState();
+      setNewKeyword('');
+      setNewServiceName('');
       resetErrors();
+      toast.success(
+        'Listing created successfully! You will be redirected to your dashboard.',
+        {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }
+      );
+      setTimeout(() => {
+        navigate('/dashboard/listings');
+      }, 5000);
     } else {
       console.warn('Validation failed:', validation);
     }
@@ -195,6 +242,9 @@ const NewListingForm = () => {
         placeholder="Email"
         className="input md:w-2/4"
       />
+      {formErrors.email && (
+        <p className="text-red-500 text-xs">{formErrors.email}</p>
+      )}
       <input
         type="tel"
         value={listingData.contactInfo.phone}
@@ -202,6 +252,9 @@ const NewListingForm = () => {
         placeholder="Phone"
         className="input md:w-2/4"
       />
+      {formErrors.phone && (
+        <p className="text-red-500 text-xs">{formErrors.phone}</p>
+      )}
 
       {/* Hours */}
       <h3 className="font-bold">Business Hours</h3>
@@ -240,54 +293,92 @@ const NewListingForm = () => {
         <p className="text-red-500 text-xs">{formErrors.servicesOffered}</p>
       )}
       {Object.entries(listingData.servicesOffered).map(([name, details]) => (
-        <div key={name} className="flex flex-col gap-2 border p-2 rounded">
-          <div className="flex justify-between items-center">
-            <strong>{name}</strong>
+        <div
+          key={name}
+          className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-gray-900">{name}</h3>
             <button
               type="button"
-              className="text-red-500 text-xs "
+              className="text-gray-400 hover:text-red-500 transition-colors p-1 rounded-lg hover:bg-gray-50"
               onClick={() => removeService(name)}
+              aria-label={`Remove ${name}`}
             >
-              Remove
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
           </div>
 
-          <label htmlFor="price" className="flex flex-col text-xs">
-            <span>Price:</span>
-            <input
-              type="number"
-              value={details.price}
-              onChange={(e) =>
-                updateServicesOffered(name, 'price', e.target.value)
-              }
-              placeholder="Price"
-              className="input w-1/4"
-            />
-          </label>
+          {/* Form Fields */}
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-gray-600 uppercase tracking-wide">
+                Price
+              </label>
+              <input
+                type="number"
+                value={details.price}
+                onChange={(e) =>
+                  updateServicesOffered(name, 'price', e.target.value)
+                }
+                placeholder="0.00"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
 
-          <label htmlFor="duration" className="flex flex-col text-xs">
-            <span>Duration (mins):</span>
-            <input
-              type="number"
-              value={details.duration}
-              onChange={(e) =>
-                updateServicesOffered(name, 'duration', e.target.value)
-              }
-              placeholder="Duration (mins)"
-              className="input w-1/4"
-            />
-          </label>
+            <div className="space-y-1">
+              <label className="text-xs font-medium text-gray-600 uppercase tracking-wide">
+                Duration (mins)
+              </label>
+              <input
+                type="number"
+                value={details.duration}
+                onChange={(e) =>
+                  updateServicesOffered(name, 'duration', e.target.value)
+                }
+                placeholder="30"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
 
-          <div className="flex items-center gap-2 mt-2">
+          {/* Actions */}
+          <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={() => saveService(name)}
-              className="btn btn-sm btn-outline btn-primary"
+              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              Save
+              Save Service
             </button>
             {savedServices[name] && (
-              <span className="text-green-600 text-sm">✔ Saved</span>
+              <div className="flex items-center gap-2 text-green-600">
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="text-sm font-medium">Saved</span>
+              </div>
             )}
           </div>
         </div>
@@ -307,6 +398,9 @@ const NewListingForm = () => {
           Add
         </button>
       </div>
+      {formErrors.keywords && (
+        <p className="text-red-500 text-sm mt-2">{formErrors.keywords}</p>
+      )}
       <div className="flex flex-wrap gap-2 mt-2">
         {listingData.keywords.map((kw, index) => (
           <span

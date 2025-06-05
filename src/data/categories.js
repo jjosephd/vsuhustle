@@ -22,8 +22,8 @@ export const categories = [
     label: 'Flyer & Graphic Design',
   },
   {
-    value: 'tech-repair',
-    label: 'Tech Repair (Phones, Laptops)',
+    value: 'technology',
+    label: 'Technology Services',
   },
   {
     value: 'fashion',
