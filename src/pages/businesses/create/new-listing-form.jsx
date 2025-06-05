@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { db } from '../../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import useListingValidation from '../../../hooks/useListingValidation';
+import { categories } from '../../../data/categories';
 
 const NewListingForm = () => {
   const { errors: formErrors, validate, resetErrors } = useListingValidation();
@@ -149,14 +150,20 @@ const NewListingForm = () => {
       {formErrors.title && (
         <p className="text-red-500 text-xs">{formErrors.title}</p>
       )}
-      <input
-        type="text"
+      <select
         name="category"
         value={listingData.category}
         onChange={handleInputChange}
-        placeholder="Category"
-        className="input md:w-2/4"
-      />
+        className="select md:w-2/4 focus:outline-none"
+      >
+        <option value="">Select a category</option>
+        {categories.map((cat) => (
+          <option key={cat.value} value={cat.value}>
+            {cat.label}
+          </option>
+        ))}
+      </select>
+
       {formErrors.category && (
         <p className="text-red-500 text-xs">{formErrors.category}</p>
       )}
@@ -238,7 +245,7 @@ const NewListingForm = () => {
             <strong>{name}</strong>
             <button
               type="button"
-              className="text-red-500 text-xs text-sm"
+              className="text-red-500 text-xs "
               onClick={() => removeService(name)}
             >
               Remove
