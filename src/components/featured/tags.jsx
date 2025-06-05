@@ -20,7 +20,7 @@ export const ScoreTag = ({ rating }) => {
     );
   }
   return (
-    <div className="bg-primary rounded px-3 py-1 text-xs font-bold text-white">
+    <div className="bg-gray-600/40 rounded px-3 py-1 text-xs font-bold text-white">
       {rating} Rating
     </div>
   );

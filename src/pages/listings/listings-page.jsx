@@ -101,11 +101,13 @@ const ListingsPage = () => {
   } = listing;
 
   const ListingImage = ({ imageUrl, title }) => (
-    <img
-      src={imageUrl}
-      alt={title || 'Listing image'}
-      className="w-full h-auto object-cover rounded-md"
-    />
+    <div className="listing-image-container w-full  max-h-[600px]">
+      <img
+        src={imageUrl}
+        alt={title ?? 'Listing image'}
+        className="listing-image h-full object-contain rounded-md"
+      />
+    </div>
   );
 
   const ListingDescription = ({ description }) => (
@@ -201,7 +203,7 @@ const ListingsPage = () => {
       : null;
 
   return (
-    <div className="py-8 px-4 max-w-7xl flex flex-wrap mx-auto md:grid md:grid-cols-3 gap-12">
+    <div className="py-8 px-4 w-full max-w-7xl flex flex-wrap mx-auto md:grid md:grid-cols-3 gap-12">
       <div className="listing-container flex flex-col md:col-span-2">
         {' '}
         <ListingImage imageUrl={imageUrl} title={title} />
