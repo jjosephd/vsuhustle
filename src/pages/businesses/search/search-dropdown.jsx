@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { titleCase } from '../../../utils/misc/stringUtils';
+import { titleCase, slugify } from '../../../utils/misc/stringUtils';
 
 const SearchDropdown = ({ results }) => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const SearchDropdown = ({ results }) => {
           </span>
           {[...new Set(results.map((l) => l.category))].map((category) =>
             renderDropdownItem(`category-${category}`, category, () =>
-              navigate(`/category/${category}`)
+              navigate(`/category/${slugify(category)}`)
             )
           )}
         </div>
