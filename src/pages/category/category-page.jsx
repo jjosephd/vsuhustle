@@ -10,14 +10,11 @@ const CategoryPage = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [listings, setListings] = useState([]);
   const [originalListings, setOriginalListings] = useState([]);
-
   const [showFilters, setShowFilters] = useState(false);
   const [sortByName, setSortByName] = useState(false);
 
-  // Fetch listings by category on initial render
   useEffect(() => {
     if (!category) {
       setError('Category does not exist');
@@ -43,28 +40,42 @@ const CategoryPage = () => {
     fetchListings();
   }, [category]);
 
-  // Reapply name sort if toggled
-  useEffect(
-    () => {
-      if (sortByName) {
-        const sorted = [...listings].sort((a, b) =>
-          a.title.localeCompare(b.title)
-        );
-        setListings(sorted);
-      } else {
-        setListings(originalListings);
-      }
-    },
-    [sortByName],
-    [originalListings]
-  );
+  useEffect(() => {
+    if (sortByName) {
+      const sorted = [...listings].sort((a, b) =>
+        a.title.localeCompare(b.title)
+      );
+      setListings(sorted);
+    } else {
+      setListings(originalListings);
+    }
+  }, [sortByName]);
 
   const toggleFilters = () => setShowFilters((prev) => !prev);
-
   const resetFilters = () => {
     setSortByName(false);
     setListings(originalListings);
   };
+
+  const FilterOptions = ({ sortByName, setSortByName, resetFilters }) => (
+    <div className="border border-gray-200 rounded-lg p-4 mb-6 bg-base-100 max-w-xs">
+      <div className="flex justify-between items-center mb-2">
+        <label className="text-sm font-medium">Sort by name (A–Z)</label>
+        <input
+          type="checkbox"
+          className="checkbox"
+          checked={sortByName}
+          onChange={(e) => setSortByName(e.target.checked)}
+        />
+      </div>
+      <button
+        onClick={resetFilters}
+        className="text-sm text-secondary hover:underline"
+      >
+        Reset Filters
+      </button>
+    </div>
+  );
 
   if (loading) {
     return (
@@ -90,44 +101,22 @@ const CategoryPage = () => {
     );
   }
 
-  function FilterOptions({ sortByName, setSortByName, resetFilters }) {
-    return (
-      <div className="border border-gray-200 rounded-lg p-4 mb-6 bg-base-100 max-w-xs">
-        <div className="container flex justify-between">
-          <label className="text-sm font-medium  items-center gap-2">
-            Sort by name (A–Z)
-          </label>
-          <input
-            type="checkbox"
-            className="checkbox"
-            checked={sortByName}
-            onChange={(e) => setSortByName(e.target.checked)}
-          />
-        </div>
+  return (
+    <div className="pt-[90px] px-4 w-full max-w-5xl mx-auto">
+      {/* This padding ensures nothing is hidden behind the fixed MainNav */}
 
+      {/* Filter Toggle */}
+      <div className="w-full py-2 z-10">
         <button
-          onClick={resetFilters}
-          className="text-sm text-secondary hover:underline"
+          className="btn btn-outline flex items-center gap-2 mb-2"
+          onClick={toggleFilters}
         >
-          Reset Filters
+          <MdSort />
+          Filters
         </button>
       </div>
-    );
-  }
 
-  return (
-    <div className="p-4 max-w-4xl mx-auto">
-      {/* Filter Toggle Button */}
-      <button
-        className="btn btn-outline flex items-center gap-2 mb-2"
-        onClick={toggleFilters}
-      >
-        <MdSort />
-        Filters
-      </button>
-
-      {/* Filter Options Panel */}
-
+      {/* Filter Panel */}
       {showFilters && (
         <FilterOptions
           sortByName={sortByName}
@@ -136,14 +125,12 @@ const CategoryPage = () => {
         />
       )}
 
-      {/* ... */}
-
-      {/* Category Heading */}
-      <h1 className="text-2xl font-bold mb-4 capitalize pt-4 px-1">
+      {/* Heading */}
+      <h1 className="text-2xl font-bold mb-4 capitalize px-1">
         {category} Services
       </h1>
 
-      {/* Listings Grid */}
+      {/* Listings */}
       <Grid listings={listings} />
     </div>
   );

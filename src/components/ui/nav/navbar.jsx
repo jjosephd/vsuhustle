@@ -144,7 +144,7 @@ const Navbar = () => {
   if (currentUser && location.pathname !== '/businesses') {
     return (
       <nav
-        className="w-full sticky top-0 z-50"
+        className="w-full fixed top-0 z-50"
         role="navigation"
         aria-label="Main navigation"
       >
