@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
+import { titleCase } from '../../../utils/misc/stringUtils';
 
 const SearchDropdown = ({ results }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const SearchDropdown = ({ results }) => {
       className="hover:bg-gray-100 hover:cursor-pointer w-full h-full px-4 py-2 flex flex-col"
     >
       <span className="font-semibold text-gray-600" onClick={onClick}>
-        {content}
+        {titleCase(content)}
       </span>
     </div>
   );

@@ -90,7 +90,7 @@ const ListingCard = ({
         {/* Left column - Image only */}
         <div className="col-span-1">
           <img
-            src={imageUrl}
+            src={imageUrl || 'https://placehold.co/600x400'}
             alt={title}
             className="h-full max-h-72 w-full object-cover rounded-xl"
             loading="lazy"
