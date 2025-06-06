@@ -7,7 +7,7 @@ export default FeaturedTag;
 
 export const CategoryTag = ({ category }) => (
   <div className="bg-secondary rounded px-3 py-1 text-xs font-bold text-white">
-    {category}
+    {category.charAt(0).toUpperCase() + category.slice(1)}
   </div>
 );
 

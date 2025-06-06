@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { db } from '../../../firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, serverTimestamp, collection } from 'firebase/firestore';
 import useListingValidation from '../../../hooks/useListingValidation';
 import { categories } from '../../../data/categories';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../context/auth/AuthContext';
 
 const NewListingForm = () => {
   const { errors: formErrors, validate, resetErrors } = useListingValidation();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [listingData, setListingData] = useState({
     title: '',
     category: '',
@@ -28,7 +30,6 @@ const NewListingForm = () => {
     },
     imageUrl: '',
     keywords: [],
-    price: 0,
     servicesOffered: {},
   });
 
@@ -122,6 +123,7 @@ const NewListingForm = () => {
       servicesOffered: rest,
     }));
   };
+
   const clearState = () => {
     setListingData({
       title: '',
@@ -150,19 +152,26 @@ const NewListingForm = () => {
     resetErrors();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const validation = validate(listingData);
     if (Object.keys(validation).length === 0) {
-      console.log('Submitting to Firestore:', listingData);
-      // TODO: Call your Firestore write logic here
-      clearState();
-      setNewKeyword('');
-      setNewServiceName('');
-      resetErrors();
-      toast.success(
-        'Listing created successfully! You will be redirected to your dashboard.',
-        {
+      if (!currentUser) {
+        toast.error('You must be logged in to create a listing.');
+        return;
+      }
+      try {
+        // Create a new listing document in Firestore
+        const docRef = doc(collection(db, 'listings'));
+        await setDoc(docRef, {
+          ...listingData,
+          userId: currentUser.uid,
+          createdAt: serverTimestamp(),
+        });
+        console.log('✅ Listing created successfully');
+        clearState();
+        toast.success('Your listing has been successfully created.', {
           position: 'top-center',
           autoClose: 5000,
           hideProgressBar: false,
@@ -170,12 +179,14 @@ const NewListingForm = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'light',
-        }
-      );
-      setTimeout(() => {
-        navigate('/dashboard/listings');
-      }, 5000);
+        });
+        setTimeout(() => {
+          navigate('/dashboard/listings'); // redirect after a delay
+        }, 5000);
+      } catch (error) {
+        console.error('Error creating listing:', error);
+        toast.error('Something went wrong while saving your listing.');
+      }
     } else {
       console.warn('Validation failed:', validation);
     }
@@ -332,7 +343,7 @@ const NewListingForm = () => {
                 type="number"
                 value={details.price}
                 onChange={(e) =>
-                  updateServicesOffered(name, 'price', e.target.value)
+                  updateServicesOffered(name, 'price', Number(e.target.value))
                 }
                 placeholder="0.00"
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"

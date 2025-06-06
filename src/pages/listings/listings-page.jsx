@@ -103,7 +103,7 @@ const ListingsPage = () => {
   const ListingImage = ({ imageUrl, title }) => (
     <div className="listing-image-container w-full  max-h-[600px]">
       <img
-        src={imageUrl}
+        src={imageUrl || 'https://placehold.co/600x400'}
         alt={title ?? 'Listing image'}
         className="listing-image h-full object-contain rounded-md"
       />
