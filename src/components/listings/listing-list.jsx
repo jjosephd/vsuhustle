@@ -55,13 +55,7 @@ const ListingList = () => {
                 loading="lazy"
               />
               <h2 className="text-sm font-semibold">{listing.title}</h2>
-              <p className="text-sm mb-1">
-                Price:{' '}
-                {Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: 'USD',
-                }).format(listing.price)}
-              </p>
+
               <p className="text-xs">{listing.description}</p>
               <div className="tag-container flex items-center gap-1 py-1">
                 <CategoryTag category={listing.category} />
