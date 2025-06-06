@@ -44,16 +44,20 @@ const CategoryPage = () => {
   }, [category]);
 
   // Reapply name sort if toggled
-  useEffect(() => {
-    if (sortByName) {
-      const sorted = [...listings].sort((a, b) =>
-        a.title.localeCompare(b.title)
-      );
-      setListings(sorted);
-    } else {
-      setListings(originalListings);
-    }
-  }, [sortByName]);
+  useEffect(
+    () => {
+      if (sortByName) {
+        const sorted = [...listings].sort((a, b) =>
+          a.title.localeCompare(b.title)
+        );
+        setListings(sorted);
+      } else {
+        setListings(originalListings);
+      }
+    },
+    [sortByName],
+    [originalListings]
+  );
 
   const toggleFilters = () => setShowFilters((prev) => !prev);
 
