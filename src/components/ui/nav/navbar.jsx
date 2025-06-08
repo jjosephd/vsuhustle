@@ -114,7 +114,7 @@ const Navbar = () => {
                       Profile Settings
                     </Link>
                     <Link
-                      to="/dashboard"
+                      to={`/dashboard/${currentUser.uid}`}
                       className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition duration-150"
                       role="menuitem"
                     >
@@ -242,7 +242,7 @@ const Navbar = () => {
                     </Link>
 
                     <Link
-                      to="/dashboard"
+                      to={`/dashboard/${currentUser.uid}`}
                       className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
                       role="menuitem"
                     >
