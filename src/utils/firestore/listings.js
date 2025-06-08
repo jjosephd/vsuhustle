@@ -106,6 +106,12 @@ export const fetchListingById = async (id) => {
   }
 };
 
+export const fetchListingsByUserId = async (userId) => {
+  const q = query(collection(db, 'listings'), where('userId', '==', userId));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+};
+
 export const fetchReviewsForListing = async (listingId) => {
   if (!listingId) {
     throw new Error('Invalid listing ID provided');

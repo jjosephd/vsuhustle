@@ -8,6 +8,7 @@ import Businesses from './pages/businesses/businesses';
 import ListingsPage from './pages/listings/listings-page';
 import CategoryPage from './pages/category/category-page';
 import NewListingPage from './pages/businesses/create/new-listing-page';
+import User from './pages/dashboard/user';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/businesses/new-listing" element={<NewListingPage />} />
           <Route path="/listings/:id" element={<ListingsPage />} />
           <Route path="/category/:category" element={<CategoryPage />} />
+          <Route path="/dashboard/:id" element={<User />} />
         </Route>
       </Route>
     </Routes>
