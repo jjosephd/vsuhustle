@@ -112,6 +112,8 @@ export const fetchListingsByUserId = async (userId) => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
+/*****Reviews******/
+
 export const fetchReviewsForListing = async (listingId) => {
   if (!listingId) {
     throw new Error('Invalid listing ID provided');
@@ -130,5 +132,20 @@ export const fetchReviewsForListing = async (listingId) => {
       throw new Error(`Firebase error: ${error.message}`);
     }
     throw error;
+  }
+};
+
+export const fetchReviewsByListingId = async (listingId) => {
+  try {
+    const reviewsRef = collection(db, `listings/${listingId}/reviews`);
+    const snapshot = await getDocs(reviewsRef);
+
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    throw new Error('Failed to load reviews');
   }
 };

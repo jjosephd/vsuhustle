@@ -7,7 +7,7 @@ import {
 } from '../../utils/firestore/listings';
 import errorHandler from '../../utils/error/errorHandler';
 import ListingPanelCard from './ListingPanelCard';
-const SummarySection = ({ currentUser, id }) => {
+const Summary = ({ currentUser, id }) => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -76,6 +76,7 @@ const SummarySection = ({ currentUser, id }) => {
         </section>
         {/* Reviews */}
         <section id="my-reviews">Reviews</section>
+
         {/* Analytics */}
         <section id="my-analytics">Analytics</section>
       </>
@@ -90,4 +91,4 @@ const SummarySection = ({ currentUser, id }) => {
   );
 };
 
-export default SummarySection;
+export default Summary;

@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useAuth } from '../../context/auth/AuthContext';
 import { Link as ScrollLink } from 'react-scroll';
 
-import SummarySection from '../../components/dashboard/SummarySection';
+import Summary from '../../components/dashboard/Summary';
 
 const User = () => {
   const { id } = useParams();
@@ -49,9 +49,9 @@ const User = () => {
 
   return (
     <div className="pt-16 md:pt-24 min-h-screen">
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row bg-base-200">
         {/* Mobile Header / Desktop Sidebar */}
-        <div className="w-full md:w-1/3 lg:w-1/4 bg-base-200 md:fixed md:h-screen ">
+        <div className="w-full md:w-1/3 lg:w-1/4  md:fixed md:h-screen ">
           <div className="flex flex-row md:flex-col items-center md:items-start p-4 gap-4">
             {/* Profile Image */}
             <div className="w-16 h-16 md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px] flex-shrink-0 overflow-hidden rounded-lg">
@@ -88,6 +88,8 @@ const User = () => {
                   spy={link.spy}
                   smooth={link.smooth}
                   duration={link.duration}
+                  containerId="dashboard-scroll-container"
+                  offset={-100}
                   className="flex-shrink-0 md:flex-shrink font-semibold text-sm md:text-base lg:text-lg py-2 px-3 md:px-0 hover:cursor-pointer transition-all ease-in duration-200 text-center md:text-left whitespace-nowrap md:whitespace-normal hover:bg-base-300 md:hover:bg-transparent rounded md:rounded-none"
                 >
                   {link.name}
@@ -102,8 +104,11 @@ const User = () => {
           <div className="p-4 md:p-6">
             <div className="bg-white rounded-xl shadow-sm h-[calc(100vh-6rem)] overflow-hidden">
               {/* Scrollable inner content */}
-              <div className="h-full overflow-y-auto p-4 md:p-6">
-                <SummarySection user={currentUser} id={id} />
+              <div
+                id="dashboard-scroll-container"
+                className="h-full overflow-y-auto p-4 md:p-6"
+              >
+                <Summary user={currentUser} id={id} />
               </div>
             </div>
           </div>
