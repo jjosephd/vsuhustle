@@ -48,14 +48,13 @@ const User = () => {
   ];
 
   return (
-    <div className="pt-24 h-[calc(100vh-6rem)]">
-      {' '}
-      {/* full height minus nav/header */}
-      <div className="flex">
-        {/* Fixed Sidebar */}
-        <div className="w-full md:w-1/3 lg:w-1/4 bg-base-200 p-4 md:fixed md:h-full overflow-y-auto">
-          <div className="flex flex-col items-center md:items-start px-4">
-            <div className="w-[150px] h-[150px] md:w-[200px] md:h-[200px] overflow-hidden rounded-lg mb-4">
+    <div className="pt-16 md:pt-24 min-h-screen">
+      <div className="flex flex-col md:flex-row">
+        {/* Mobile Header / Desktop Sidebar */}
+        <div className="w-full md:w-1/3 lg:w-1/4 bg-base-200 md:fixed md:h-screen ">
+          <div className="flex flex-row md:flex-col items-center md:items-start p-4 gap-4">
+            {/* Profile Image */}
+            <div className="w-16 h-16 md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px] flex-shrink-0 overflow-hidden rounded-lg">
               <img
                 src="https://placehold.co/600x400"
                 alt="profile image"
@@ -63,12 +62,25 @@ const User = () => {
                 className="object-cover w-full h-full"
               />
             </div>
-            <div className="text-center md:text-left w-full">
-              <span className="text-xl md:text-2xl">Username</span>
-              <br />
-              <span className="text-sm md:text-base">{currentUser.email}</span>
+
+            {/* User Info */}
+            <div className="flex-1 md:w-full text-left md:text-center lg:text-left">
+              <div className="text-lg md:text-xl lg:text-2xl font-semibold truncate">
+                Username
+              </div>
+              <div className="text-sm md:text-base text-gray-600 truncate">
+                {currentUser.email}
+              </div>
             </div>
-            <div className="py-8 w-full">
+
+            <div className="md:hidden">
+              {/* Add hamburger menu button here if needed */}
+            </div>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="px-4 pb-4 md:py-8">
+            <div className="flex flex-row md:flex-col gap-2 md:gap-0 overflow-x-auto md:overflow-x-visible">
               {navLinks.map((link, index) => (
                 <ScrollLink
                   key={index}
@@ -76,7 +88,7 @@ const User = () => {
                   spy={link.spy}
                   smooth={link.smooth}
                   duration={link.duration}
-                  className="block font-bold text-base md:text-lg py-2 hover:cursor-pointer transition-all ease-in duration-100 text-center md:text-left"
+                  className="flex-shrink-0 md:flex-shrink font-semibold text-sm md:text-base lg:text-lg py-2 px-3 md:px-0 hover:cursor-pointer transition-all ease-in duration-200 text-center md:text-left whitespace-nowrap md:whitespace-normal hover:bg-base-300 md:hover:bg-transparent rounded md:rounded-none"
                 >
                   {link.name}
                 </ScrollLink>
@@ -85,10 +97,15 @@ const User = () => {
           </div>
         </div>
 
-        {/* Scrollable Content (SummarySection) */}
-        <div className="w-full md:ml-[33.333%] lg:ml-[25%] overflow-y-auto h-full p-4">
-          <div className="bg-white rounded-xl p-6 shadow-sm h-full">
-            <SummarySection user={currentUser} id={id} />
+        {/* Main Content */}
+        <div className="w-full md:ml-[33.333%] lg:ml-[25%] min-h-screen">
+          <div className="p-4 md:p-6">
+            <div className="bg-white rounded-xl shadow-sm h-[calc(100vh-6rem)] overflow-hidden">
+              {/* Scrollable inner content */}
+              <div className="h-full overflow-y-auto p-4 md:p-6">
+                <SummarySection user={currentUser} id={id} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

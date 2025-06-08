@@ -6,12 +6,12 @@ import { FiSend } from 'react-icons/fi';
 const ListingPanelCard = ({ listing }) => {
   const { title, description, imageUrl, id } = listing;
   return (
-    <div className="card bg-base-100 w-sm shadow-sm">
-      <figure className="h-[200px]">
+    <div className="card bg-base-100 w-full shadow-sm">
+      <figure className="h-48">
         <img
           src={imageUrl || 'https://placehold.co/600x400'}
           alt="listing image"
-          className="object-contain "
+          className="object-contain w-full rounded-lg"
         />
       </figure>
       <div className="card-body">
