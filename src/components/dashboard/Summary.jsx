@@ -4,11 +4,13 @@ import {
   fetchListingById,
   fetchReviewsForListing,
   fetchListingsByUserId,
+  fetchReviewsByListingId,
 } from '../../utils/firestore/listings';
 import errorHandler from '../../utils/error/errorHandler';
 import ListingPanelCard from './ListingPanelCard';
 const Summary = ({ currentUser, id }) => {
   const [listings, setListings] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const auth = getAuth();
