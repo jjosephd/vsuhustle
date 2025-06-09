@@ -48,7 +48,7 @@ const User = () => {
   ];
 
   return (
-    <div className="pt-16 md:pt-24 min-h-screen">
+    <div className=" min-h-screen">
       <div className="flex flex-col md:flex-row bg-base-200">
         {/* Mobile Header / Desktop Sidebar */}
         <div className="w-full md:w-1/3 lg:w-1/4  md:fixed md:h-screen ">

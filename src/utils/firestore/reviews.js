@@ -8,8 +8,7 @@ export const fetchReviewsForListing = async (listingId) => {
   try {
     const q = query(
       collection(db, 'reviews'),
-      where('listingId', '==', listingId),
-      orderBy('createdAt', 'desc')
+      where('listingId', '==', listingId)
     );
     const snapshot = await getDocs(q);
     return snapshot.docs.map((doc) => ({

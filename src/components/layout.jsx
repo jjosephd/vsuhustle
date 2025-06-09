@@ -12,7 +12,7 @@ const Layout = () => {
       <header>
         <Navbar />
       </header>
-      <main className=""> </main>
+      <main className="pt-16 md:pt-24"> </main>
       <Outlet />
     </div>
   );
