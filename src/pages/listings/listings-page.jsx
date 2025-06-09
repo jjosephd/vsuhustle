@@ -99,11 +99,11 @@ const ListingsPage = () => {
   } = listing;
 
   const ListingImage = ({ imageUrl, title }) => (
-    <div className="listing-image-container w-full  max-h-[600px]">
+    <div className="listing-image-container w-full aspect-[3/2] sm:aspect-[4/3] max-h-[600px] overflow-hidden rounded-md">
       <img
         src={imageUrl || 'https://placehold.co/600x400'}
         alt={title ?? 'Listing image'}
-        className="listing-image h-auto sm:h-full object-contain rounded-md"
+        className="listing-image w-full h-full object-cover"
       />
     </div>
   );
