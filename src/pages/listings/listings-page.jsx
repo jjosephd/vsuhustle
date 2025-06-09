@@ -104,6 +104,9 @@ const ListingsPage = () => {
         src={imageUrl || 'https://placehold.co/600x400'}
         alt={title ?? 'Listing image'}
         className="listing-image w-full h-full object-cover"
+        onError={(e) => {
+          e.target.src = 'https://placehold.co/600x400';
+        }}
       />
     </div>
   );
