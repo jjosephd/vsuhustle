@@ -14,7 +14,7 @@ const Layout = () => {
         <Navbar />
       </header>
       <main
-        className={useLocation().pathname === '/businesses' ? 'pt-0' : 'pt-16'}
+        className={useLocation().pathname === '/businesses' ? 'pt-0' : 'pt-24'}
       >
         {' '}
       </main>
