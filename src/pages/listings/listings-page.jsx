@@ -208,7 +208,7 @@ const ListingsPage = () => {
       : null;
 
   return (
-    <div className="py-8 px-4 w-full max-w-7xl flex flex-wrap mx-auto md:grid md:grid-cols-3 gap-12">
+    <div className="pb-4 px-4 w-full max-w-7xl flex flex-wrap mx-auto md:grid md:grid-cols-3 gap-12">
       <div className="listing-container flex flex-col md:col-span-2">
         {' '}
         <ListingImage imageUrl={imageUrl} title={title} />
