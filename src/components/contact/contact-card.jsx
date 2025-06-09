@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react';
-import { fetchListingById } from '../../utils/firestore/listings';
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 {
