@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchUserProfile } from '../../utils/firestore/users';
 import { fetchReviewsReceived } from '../../utils/firestore/reviews';
 import { useAuth } from '../../context/auth/AuthContext';
+import ReviewCard from '../listings/reviews/ReviewCard';
 
 const AnalyticsPanel = () => {
   const { currentUser } = useAuth();
@@ -71,14 +72,13 @@ const AnalyticsPanel = () => {
         ) : (
           <ul className="space-y-3">
             {reviews.map((review) => (
-              <li key={review.id} className="p-3 border rounded-md bg-base-200">
-                <p className="font-medium">
-                  <span className="text-sm text-gray-500">Service:</span>{' '}
-                  {review.comment?.serviceUsed || 'N/A'}
-                </p>
-                <p className="mt-1 text-gray-800">
-                  {review.comment?.body || 'No review text provided.'}
-                </p>
+              <li key={review.id} className="border rounded-md bg-base-200 p-3">
+                <ReviewCard
+                  userId={review.userId}
+                  comment={review.comment}
+                  rating={review.rating}
+                  createdAt={review.createdAt}
+                />
               </li>
             ))}
           </ul>

@@ -12,6 +12,7 @@ import { Link } from 'react-router';
 
 import FeaturedTag, { CategoryTag } from '../../components/featured/tags';
 import ContactCard from '../../components/contact/contact-card';
+import ReviewCard from '../../components/listings/reviews/ReviewCard';
 import errorHandler from '../../utils/error/errorHandler';
 
 const ListingsPage = () => {
@@ -146,36 +147,6 @@ const ListingsPage = () => {
         </div>
         <hr className="my-2 border-t border-gray-200" />
       </li>
-    );
-  };
-
-  const ReviewCard = ({ userId, comment, rating, createdAt }) => {
-    return (
-      <div className="review-card w-full max-w-5xl py-6">
-        <div className="details-container w-full flex justify-between items-center">
-          <div className="reviewer-name">{userId}</div>
-          <div className="rating-container">
-            <div className="reviewer-rating flex flex-row">
-              {[...Array(rating).keys()].map((i) => (
-                <FaStar key={i} className="text-yellow-500" />
-              ))}
-            </div>
-            <div className="review-date text-xs text-gray-500 ">
-              Posted:{' '}
-              {createdAt?.toDate?.().toLocaleDateString?.() || 'Unknown'}
-            </div>
-          </div>
-        </div>
-        <p className="review-comment text-gray-800 mt-2">
-          {comment?.body || 'No review text provided.'}
-        </p>
-        <p className="text-sm text-gray-500">
-          <span className="font-medium text-gray-400">Service:</span>{' '}
-          {comment?.serviceUsed || 'N/A'}
-        </p>
-
-        <hr className="my-2 border-t border-gray-200" />
-      </div>
     );
   };
 
