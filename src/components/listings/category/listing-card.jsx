@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { fetchReviewsForListing } from '../../../utils/firestore/listings';
+import { fetchReviewsForListing } from '../../../utils/firestore/reviews';
 import FeaturedTag, { CategoryTag, ScoreTag } from '../../featured/tags';
 import { Link } from 'react-router';
 import { FaRegBookmark } from 'react-icons/fa';

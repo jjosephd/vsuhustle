@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import {
-  fetchListingById,
-  fetchReviewsForListing,
-} from '../../utils/firestore/listings';
+import { fetchListingById } from '../../utils/firestore/listings';
+import { fetchReviewsForListing } from '../../utils/firestore/reviews';
 import { FaRegBookmark } from 'react-icons/fa';
 import { BiShare } from 'react-icons/bi';
 import { FaStar } from 'react-icons/fa';
@@ -160,11 +158,18 @@ const ListingsPage = () => {
               ))}
             </div>
             <div className="review-date text-xs text-gray-500 ">
-              Posted: {createdAt.toDate().toLocaleDateString()}
+              Posted:{' '}
+              {createdAt?.toDate?.().toLocaleDateString?.() || 'Unknown'}
             </div>
           </div>
         </div>
-        <div className="review-comment">{comment}</div>
+        <p className="review-comment text-gray-800 mt-2">
+          {comment?.body || 'No review text provided.'}
+        </p>
+        <p className="text-sm text-gray-500">
+          <span className="font-medium text-gray-400">Service:</span>{' '}
+          {comment?.serviceUsed || 'N/A'}
+        </p>
 
         <hr className="my-2 border-t border-gray-200" />
       </div>

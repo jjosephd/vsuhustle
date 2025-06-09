@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import {
   fetchListingById,
-  fetchReviewsForListing,
   fetchListingsByUserId,
-  fetchReviewsByListingId,
 } from '../../utils/firestore/listings';
 import errorHandler from '../../utils/error/errorHandler';
 import ListingPanelCard from './ListingPanelCard';
+import AnalyticsPanel from './AnalyticsPanel';
 const Summary = ({ currentUser, id }) => {
   const [listings, setListings] = useState([]);
-  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const auth = getAuth();
@@ -31,7 +29,7 @@ const Summary = ({ currentUser, id }) => {
     };
 
     fetchListings();
-  }, [user]);
+  }, []);
 
   const formattedCreatedAt = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -76,11 +74,12 @@ const Summary = ({ currentUser, id }) => {
             </ul>
           )}
         </section>
-        {/* Reviews */}
-        <section id="my-reviews">Reviews</section>
 
         {/* Analytics */}
-        <section id="my-analytics">Analytics</section>
+        <section id="my-analytics">
+          <h1 className="text-2xl">Analytics</h1>
+          <AnalyticsPanel />
+        </section>
       </>
     );
   };

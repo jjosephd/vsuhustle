@@ -6,6 +6,9 @@ import {
   doc,
   getDoc,
   orderBy,
+  setDoc,
+  updateDoc,
+  increment,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -114,38 +117,34 @@ export const fetchListingsByUserId = async (userId) => {
 
 /*****Reviews******/
 
-export const fetchReviewsForListing = async (listingId) => {
-  if (!listingId) {
-    throw new Error('Invalid listing ID provided');
-  }
+export const initializeUserProfile = async (user) => {
+  const userRef = doc(db, 'users', user.uid);
+  const snap = await getDoc(userRef);
 
-  try {
-    const reviewsCollection = collection(db, `listings/${listingId}/reviews`);
-    const sortedQuery = query(reviewsCollection, orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(sortedQuery);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  } catch (error) {
-    if (error.code) {
-      throw new Error(`Firebase error: ${error.message}`);
-    }
-    throw error;
+  const creationTime = user.metadata?.creationTime
+    ? new Date(user.metadata.creationTime)
+    : new Date();
+
+  if (!snap.exists()) {
+    // Count reviews they've written
+    const q = query(
+      collection(db, 'reviews'),
+      where('reviewerId', '==', user.uid)
+    );
+    const reviewSnapshot = await getDocs(q);
+
+    await setDoc(userRef, {
+      email: user.email,
+      servicesUsed: 0,
+      reviewsGiven: reviewSnapshot.size,
+      createdAt: creationTime,
+    });
   }
 };
 
-export const fetchReviewsByListingId = async (listingId) => {
-  try {
-    const reviewsRef = collection(db, `listings/${listingId}/reviews`);
-    const snapshot = await getDocs(reviewsRef);
-
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-  } catch (error) {
-    console.error('Error fetching reviews:', error);
-    throw new Error('Failed to load reviews');
-  }
+export const incrementServicesUsed = async (uid) => {
+  const userRef = doc(db, 'users', uid);
+  await updateDoc(userRef, {
+    servicesUsed: increment(1), // Firestore atomic increment
+  });
 };
