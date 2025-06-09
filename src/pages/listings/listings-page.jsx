@@ -103,7 +103,7 @@ const ListingsPage = () => {
       <img
         src={imageUrl || 'https://placehold.co/600x400'}
         alt={title ?? 'Listing image'}
-        className="listing-image h-full object-contain rounded-md"
+        className="listing-image h-auto sm:h-full object-contain rounded-md"
       />
     </div>
   );
