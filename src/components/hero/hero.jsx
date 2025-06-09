@@ -7,7 +7,7 @@ import { useAuth } from '../../context/auth/AuthContext';
 const Hero = () => {
   const { user } = useAuth();
   return (
-    <div className="min-h-screen w-full pt-24">
+    <div className="min-h-screen w-full">
       <div className="flex flex-col justify-center sm:grid sm:grid-cols-2 place-items-center px-6 w-full h-full">
         <div className="left-col">
           <h1 className="text-4xl sm:text-6xl font-bold mb-4">

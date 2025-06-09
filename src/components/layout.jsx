@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router';
 import Navbar from './ui/nav/navbar';
 import Home from '../pages/home';
+import { useLocation } from 'react-router';
 
 const Layout = () => {
   return (
@@ -12,7 +13,11 @@ const Layout = () => {
       <header>
         <Navbar />
       </header>
-      <main className="pt-16 md:pt-24"> </main>
+      <main
+        className={useLocation().pathname === '/businesses' ? 'pt-0' : 'pt-16'}
+      >
+        {' '}
+      </main>
       <Outlet />
     </div>
   );
