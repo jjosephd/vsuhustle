@@ -55,7 +55,6 @@ const ListingsPage = () => {
       try {
         const reviews = await fetchReviewsForListing(id);
         setReviews(reviews);
-        console.log(reviews);
       } catch (error) {
         console.error('Error fetching reviews:', error);
         setReviewsError(error.message || 'Failed to fetch reviews');

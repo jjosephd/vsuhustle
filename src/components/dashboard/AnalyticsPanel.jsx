@@ -72,7 +72,7 @@ const AnalyticsPanel = () => {
         ) : (
           <ul className="space-y-3">
             {reviews.map((review) => (
-              <li key={review.id} className="border rounded-md bg-base-200 p-3">
+              <li key={review.id}>
                 <ReviewCard
                   userId={review.userId}
                   comment={review.comment}
