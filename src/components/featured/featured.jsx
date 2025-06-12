@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import ListingList from '../listings/listing-list';
+import FeaturedListingList from './FeaturedListingList';
 import { FaCircleArrowRight, FaCircleArrowLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router';
 import { fetchListingById } from '../../utils/firestore/listings';
@@ -26,7 +26,7 @@ const Featured = () => {
           ref={scrollRef}
           className="featured-listings flex overflow-x-scroll scroll-smooth snap-x snap-mandatory gap-4 mx-auto"
         >
-          <ListingList />
+          <FeaturedListingList />
         </div>
 
         {/* Left arrow */}

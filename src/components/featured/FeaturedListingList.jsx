@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useNavigate } from 'react-router';
-import FeaturedTag, { CategoryTag } from '../featured/tags';
+import FeaturedTag, { CategoryTag } from './tags';
+import FeaturedListingCard from './FeaturedListingCard';
+
+import { fetchAllListings } from '../../utils/firestore/listings';
 import { handleError } from '../../utils/error/errorHandler';
 
-const ListingList = () => {
+const FeaturedListingList = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -71,4 +74,4 @@ const ListingList = () => {
   );
 };
 
-export default ListingList;
+export default FeaturedListingList;

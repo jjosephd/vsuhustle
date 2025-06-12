@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router';
 import PrivateRoute from './routes/private-route';
 import Login from './components/login/login';
-import Listings from './pages/listings';
 import Layout from './components/layout';
 import Home from './pages/home';
 import Businesses from './pages/businesses/businesses';
