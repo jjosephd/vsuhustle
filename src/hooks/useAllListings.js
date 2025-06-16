@@ -1,27 +1,17 @@
 // hooks/useAllListings.js
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchAllListings } from '../utils/firestore/listings';
 
 const useAllListings = () => {
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
+  const {data: listings, isLoading: listingLoading, error: listingError} = useQuery({
+    queryKey: ['listings'],
+    queryFn: () => fetchAllListings(),
+    keepPreviousData: true,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const all = await fetchAllListings(); // Firestore query
-        setListings(all);
-      } catch (e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  return {listings: listings, loading: listingLoading, error: listingError};
 
-  return { listings, loading, error };
-};
+}
 
 export default useAllListings;
