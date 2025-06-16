@@ -115,7 +115,24 @@ export const fetchListingsByUserId = async (userId) => {
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
-/*****Reviews******/
+/**
+ * Creates a new listing document in Firestore.
+ *
+ * @param {object} listingData The listing data to write to Firestore, which
+ *   should include all required fields except `userId` and `createdAt`.
+ * @param {string} userId The ID of the user creating the listing.
+ * @return {Promise<string>} A promise that resolves to the ID of the newly
+ *   created listing document.
+ */
+export const createListing = async ({listing, userId}) => {
+  const docRef = doc(collection(db, 'listings'));
+  await setDoc(docRef, {
+    ...listingData,
+    userId,
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+}
 
 export const initializeUserProfile = async (user) => {
   const userRef = doc(db, 'users', user.uid);

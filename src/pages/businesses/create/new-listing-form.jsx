@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { db } from '../../../firebase';
 import { doc, setDoc, serverTimestamp, collection } from 'firebase/firestore';
 import useListingValidation from '../../../hooks/useListingValidation';
+import useCreateListing from '../../../hooks/useCreateListing';
 import { categories } from '../../../data/categories';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../context/auth/AuthContext';
@@ -11,7 +12,9 @@ const NewListingForm = () => {
   const { errors: formErrors, validate, resetErrors } = useListingValidation();
   const navigate = useNavigate();
   const { currentUser } = useAuth();
-  const [listingData, setListingData] = useState({
+  
+
+  const initialState = {
     title: '',
     category: '',
     description: '',
@@ -31,11 +34,37 @@ const NewListingForm = () => {
     imageUrl: '',
     keywords: [],
     servicesOffered: {},
-  });
+  };
 
+  
+  const [listingData, setListingData] = useState(initialState);
   const [newKeyword, setNewKeyword] = useState('');
   const [newServiceName, setNewServiceName] = useState('');
+  const [savedServices, setSavedServices] = useState({});
 
+
+  const clearState = () => {
+    setListingData(initialState);
+    setNewKeyword('');
+    setNewServiceName('');
+    resetErrors();
+  };
+
+  const {mutate: createListing, isPending} = useCreateListing(clearState);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validation = validate(listingData);
+    if (Object.keys(validation).length > 0) return;
+
+    if (!currentUser) {
+      toast.error('You must be logged in to create a listing.');
+      return;
+    }
+
+    createListing({ listingData, userId: currentUser.uid }); // 🔁 CHANGED
+  };
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setListingData((prev) => ({
@@ -64,7 +93,6 @@ const NewListingForm = () => {
     }));
   };
 
-  const [savedServices, setSavedServices] = useState({});
 
   const saveService = (serviceName) => {
     setSavedServices((prev) => ({
@@ -124,74 +152,9 @@ const NewListingForm = () => {
     }));
   };
 
-  const clearState = () => {
-    setListingData({
-      title: '',
-      category: '',
-      description: '',
-      contactInfo: {
-        email: '',
-        phone: '',
-      },
-      hours: {
-        monday: { open: '', close: '' },
-        tuesday: { open: '', close: '' },
-        wednesday: { open: '', close: '' },
-        thursday: { open: '', close: '' },
-        friday: { open: '', close: '' },
-        saturday: { open: '', close: '' },
-        sunday: { open: '', close: '' },
-      },
-      imageUrl: '',
-      keywords: [],
-      price: 0,
-      servicesOffered: {},
-    });
-    setNewKeyword('');
-    setNewServiceName('');
-    resetErrors();
-  };
+  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const validation = validate(listingData);
-    if (Object.keys(validation).length === 0) {
-      if (!currentUser) {
-        toast.error('You must be logged in to create a listing.');
-        return;
-      }
-      try {
-        // Create a new listing document in Firestore
-        const docRef = doc(collection(db, 'listings'));
-        await setDoc(docRef, {
-          ...listingData,
-          userId: currentUser.uid,
-          createdAt: serverTimestamp(),
-        });
-        console.log('✅ Listing created successfully');
-        clearState();
-        toast.success('Your listing has been successfully created.', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        setTimeout(() => {
-          navigate('/dashboard/listings'); // redirect after a delay
-        }, 5000);
-      } catch (error) {
-        console.error('Error creating listing:', error);
-        toast.error('Something went wrong while saving your listing.');
-      }
-    } else {
-      console.warn('Validation failed:', validation);
-    }
-  };
-
+  
   return (
     <form
       className="flex flex-col items-center w-full px-12 md:px-36 gap-4"
