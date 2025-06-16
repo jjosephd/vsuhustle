@@ -2,7 +2,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createListing } from '../utils/firestore/listings';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const useCreateListing = ({ onSuccessCallback }) => {
   const queryClient = useQueryClient();
