@@ -5,6 +5,7 @@ import debounce from 'lodash.debounce';
 import SearchDropdown from './search-dropdown';
 import { fetchAllListings } from '../../../utils/firestore/listings';
 import useListingStore from '../../../stores/useListingStore';
+import { MdClear } from 'react-icons/md';
 
 const SearchBar = () => {
   const {
@@ -52,13 +53,22 @@ const SearchBar = () => {
 
   return (
     <div className="relative w-full md:w-1/2 mx-auto">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search for services"
-        className="input w-full bg-slate-50 text-gray-800 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline"
-      />
+      <div className=" flex items-center">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for services"
+          className="input w-full bg-slate-50 text-gray-800 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline"
+        />
+        <button
+          onClick={resetSearch}
+          className="absolute z-30 right-4 top-1/2 transform -translate-y-1/2 text-gray-600/50 bg-gray-400/10 rounded-full px-2 py-1 text-xs hover:text-gray-800 hover:cursor-pointer"
+        >
+          Clear
+        </button>
+      </div>
+
       <SearchDropdown results={searchResults} />
     </div>
   );
