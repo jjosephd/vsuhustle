@@ -1,43 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchListingById } from '../utils/firestore/listings';
 import { fetchReviewsForListing } from '../utils/firestore/reviews';
 
 const useListingDetail = (id) => {
-  const [listing, setListing] = useState(null);
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [reviewsError, setReviewsError] = useState(null);
+  const {
+    data: listing,
+    isLoading: listingLoading,
+    error: listingError
+  } = useQuery({
+    queryKey: ['listing', id],
+    queryFn: () => fetchListingById(id),
+    enabled: !!id
+  });
 
-  useEffect(() => {
-    if (!id) {
-      setError('No listing ID provided');
-      setLoading(false);
-      return;
-    }
-
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const fetchedListing = await fetchListingById(id);
-        const fetchedReviews = await fetchReviewsForListing(id);
-        setListing(fetchedListing);
-        setReviews(fetchedReviews);
-      } catch (err) {
-        setError(err.message || 'Failed to fetch listing');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [id]);
+  const {
+    data: reviews,
+    isLoading: reviewsLoading,
+    error: reviewsError
+  } = useQuery({
+    queryKey: ['reviews', id],
+    queryFn: () => fetchReviewsForListing(id),
+    enabled: !!id
+  });
 
   return {
     listing,
     reviews,
-    loading,
-    error,
+    loading: listingLoading || reviewsLoading,
+    error: listingError,
     reviewsError,
   };
 };
