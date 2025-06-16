@@ -1,29 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchListingsByUserId } from '../utils/firestore/listings';
 
 const useUserListings = (userId) => {
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!userId) return;
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['listings', userId],
+    queryFn: () => fetchListingsByUserId(userId),
+    enabled: !!userId,
+    keepPreviousData: true,
+  });
 
-    const fetchListings = async () => {
-      try {
-        const data = await fetchListingsByUserId(userId);
-        setListings(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchListings();
-  }, [userId]);
-
-  return { listings, loading, error };
+  return { listings: data, loading: isLoading, error };
 };
 
 export default useUserListings;
