@@ -9,6 +9,7 @@ import {
   setDoc,
   updateDoc,
   increment,
+  serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -124,14 +125,19 @@ export const fetchListingsByUserId = async (userId) => {
  * @return {Promise<string>} A promise that resolves to the ID of the newly
  *   created listing document.
  */
-export const createListing = async ({listing, userId}) => {
-  const docRef = doc(collection(db, 'listings'));
-  await setDoc(docRef, {
-    ...listingData,
-    userId,
-    createdAt: serverTimestamp(),
-  });
-  return docRef.id;
+export const createListing = async ({listingData, userId}) => {
+  try {
+    const docRef = doc(collection(db, 'listings'));
+    await setDoc(docRef, {
+      ...listingData,
+      userId,
+      createdAt: serverTimestamp(),
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error('Error creating listing:', error.message);
+    throw error;
+  }
 }
 
 export const initializeUserProfile = async (user) => {

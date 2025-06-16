@@ -20,7 +20,8 @@ const useCreateListing = ({ onSuccessCallback }) => {
       setTimeout(() => navigate('/dashboard/listings'), 5000);
     },
     onError: () => {
-      toast.error('Something went wrong while saving your listing.');
+      toast.error(
+        'There was an error creating your listing. Please try again.',);
     },
   });
 };

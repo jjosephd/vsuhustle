@@ -1,10 +1,24 @@
-Immediate Action Steps
-[x] 1. Insert setDoc() in handleSubmit. (to post new listings to firebase)
--Check firebase rules
-
-2. Add createdAt, userId, and optionally status fields to listing.
-
-3. Finish the user dashboard to fetch and show user listings.
-
-4. Hook up delete/edit functionality if in scope.
-
+1. Fix Search Behavior
+	* Restrict search to name and keywords only (currently searches entire listing content).
+2. Ensure Successful Submission Flow
+	* Add createdAt, userId, and optional status to each listing.
+	* Add nav redirection upon successful submission.
+3. Submit New Listings to Firebase
+	* setDoc() in handleSubmit (already done).
+	* Verify Firebase security rules for user-generated content.
+4. User Dashboard MVP
+	* Fetch and show user-specific listings.
+	* Hook up delete/edit functionality if in scope.
+5. Edit Listing Page
+	* Create and wire up an edit form for existing listings.
+6. Profile Settings Component
+	* Basic user settings: name, profile image, bio, etc.
+7. Datepicker Integration
+	* Implement a consistent datepicker for the new listing form (avoid inconsistent formats).
+8. Clean Up Featured Component
+	* Ensure it displays properly and highlights listings as intended.
+9. Improve Overall UI
+	* Spacing, typography, responsiveness, color consistency, etc.
+10. Consistent Navigation
+	* Standardize layout and behavior across all pages (e.g., mobile/desktop).
+	* Add NavLinks for business profile pages where needed.

@@ -50,7 +50,7 @@ const NewListingForm = () => {
     resetErrors();
   };
 
-  const {mutate: createListing, isPending} = useCreateListing(clearState);
+  const { mutate: createListing, isPending } = useCreateListing({ onSuccessCallback: clearState });
   const handleSubmit = (e) => {
     e.preventDefault();
 
