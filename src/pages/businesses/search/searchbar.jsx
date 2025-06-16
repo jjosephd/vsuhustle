@@ -1,34 +1,31 @@
-import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Fuse from 'fuse.js';
 import debounce from 'lodash.debounce';
 import SearchDropdown from './search-dropdown';
 import { fetchAllListings } from '../../../utils/firestore/listings';
+import useListingStore from '../../../stores/useListingStore';
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
-
-  const queryClient = useQueryClient();
-
-  // Fetch and cache listings using React Query
   const {
-    data: allListings = [],
-    isLoading,
-    isError,
-  } = useQuery({
+    searchTerm,
+    setSearchTerm,
+    setSearchResults,
+    searchResults,
+    resetSearch,
+  } = useListingStore();
+  const { data: allListings = [] } = useQuery({
     queryKey: ['listings'],
     queryFn: fetchAllListings,
-    staleTime: 1000 * 60 * 5, // Optional: keep listings fresh for 5 min
+    staleTime: 1000 * 60 * 5,
   });
 
-  // Debounced fuzzy search
   useEffect(() => {
     const handler = debounce(() => {
       const trimmed = searchTerm.trim();
 
       if (trimmed.length < 3) {
-        setResults([]);
+        setSearchResults([]);
         return;
       }
 
@@ -45,7 +42,8 @@ const SearchBar = () => {
           (r) => r.score !== null && r.score !== undefined && r.score < 0.3
         )
         .map((r) => r.item);
-      setResults(searchResults);
+
+      setSearchResults(searchResults);
     }, 300);
 
     handler();
@@ -61,7 +59,7 @@ const SearchBar = () => {
         placeholder="Search for services"
         className="input w-full bg-slate-50 text-gray-800 px-4 py-2 rounded-lg focus:outline-none focus:shadow-outline"
       />
-      <SearchDropdown results={results} />
+      <SearchDropdown results={searchResults} />
     </div>
   );
 };

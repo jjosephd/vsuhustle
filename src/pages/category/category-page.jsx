@@ -4,16 +4,18 @@ import { fetchListingsByCategory } from '../../utils/firestore/listings';
 import errorHandler from '../../utils/error/errorHandler';
 import { MdSort } from 'react-icons/md';
 import Grid from '../../components/listings/category/grid';
+import useListingStore from '../../stores/useListingStore';
 
 const CategoryPage = () => {
   const { category } = useParams();
 
+  const { sortByName, setSortByName, setSelectedCategory, resetFilters } =
+    useListingStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [listings, setListings] = useState([]);
   const [originalListings, setOriginalListings] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [sortByName, setSortByName] = useState(false);
 
   useEffect(() => {
     if (!category) {
@@ -21,6 +23,8 @@ const CategoryPage = () => {
       setLoading(false);
       return;
     }
+
+    setSelectedCategory(category);
 
     const fetchListings = async () => {
       try {
@@ -52,10 +56,6 @@ const CategoryPage = () => {
   }, [sortByName]);
 
   const toggleFilters = () => setShowFilters((prev) => !prev);
-  const resetFilters = () => {
-    setSortByName(false);
-    setListings(originalListings);
-  };
 
   const FilterOptions = ({ sortByName, setSortByName, resetFilters }) => (
     <div className="border border-gray-200 rounded-lg p-4 mb-6 bg-base-100 max-w-xs">
