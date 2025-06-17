@@ -102,7 +102,7 @@ const CategoryPage = () => {
   }
 
   return (
-    <div className="pt-[90px] px-4 w-full max-w-5xl mx-auto">
+    <div className=" px-4 w-full max-w-5xl mx-auto">
       {/* This padding ensures nothing is hidden behind the fixed MainNav */}
 
       {/* Filter Toggle */}
