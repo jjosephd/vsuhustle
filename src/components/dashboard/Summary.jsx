@@ -3,11 +3,14 @@ import useUserListings from '../../hooks/useUserListings';
 import errorHandler from '../../utils/error/errorHandler';
 import ListingPanelCard from './ListingPanelCard';
 import AnalyticsPanel from './AnalyticsPanel';
+import useListingStore from '../../stores/useListingStore';
+import EditListingView from './EditListingView';
 
 const Summary = ({ currentUser }) => {
   const auth = getAuth();
   const user = auth.currentUser;
   const { listings, loading, error } = useUserListings(user?.uid);
+  const { isEditModalOpen, setIsEditModalOpen } = useListingStore();
 
   const formattedCreatedAt = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -74,6 +77,7 @@ const Summary = ({ currentUser }) => {
     <div className="flex flex-col gap-4 overflow-x-hidden overflow-y-auto p-8">
       <SummaryHeader />
       <SummaryPanel />
+      <EditListingView />
     </div>
   );
 };

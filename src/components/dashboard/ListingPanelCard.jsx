@@ -3,8 +3,13 @@ import { Link } from 'react-router';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { FaEdit } from 'react-icons/fa';
 import { FiSend } from 'react-icons/fi';
+import useListingStore from '../../stores/useListingStore';
+import EditListingView from './EditListingView';
 const ListingPanelCard = ({ listing }) => {
   const { title, description, imageUrl, id } = listing;
+
+  const { setCurrentListing, setIsEditModalOpen, currentListing } =
+    useListingStore();
   return (
     <div className="card bg-base-100 w-full h-full shadow-sm">
       <figure className="h-48">
@@ -24,12 +29,15 @@ const ListingPanelCard = ({ listing }) => {
             </Link>
           </div>
           <div className="card-actions">
-            <Link
-              to={`/listings/${id}/edit`}
+            <div
               className="btn btn-primary btn-sm"
+              onClick={() => {
+                setCurrentListing(listing);
+                setIsEditModalOpen(true);
+              }}
             >
               <FaEdit />
-            </Link>
+            </div>
           </div>
           <div className="card-actions">
             <button className="btn btn-primary btn-sm">
