@@ -10,6 +10,7 @@ import {
   updateDoc,
   increment,
   serverTimestamp,
+  deleteDoc,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 
@@ -125,7 +126,7 @@ export const fetchListingsByUserId = async (userId) => {
  * @return {Promise<string>} A promise that resolves to the ID of the newly
  *   created listing document.
  */
-export const createListing = async ({listingData, userId}) => {
+export const createListing = async ({ listingData, userId }) => {
   try {
     const docRef = doc(collection(db, 'listings'));
     await setDoc(docRef, {
@@ -138,7 +139,20 @@ export const createListing = async ({listingData, userId}) => {
     console.error('Error creating listing:', error.message);
     throw error;
   }
-}
+};
+
+export const deleteListingbyId = async (listingId) => {
+  if (!listingId || typeof listingId !== 'string') {
+    throw new Error('Invalid listingId');
+  }
+  try {
+    const docRef = doc(db, 'listings', listingId);
+    await deleteDoc(docRef);
+    return 'Listing deleted successfully';
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const initializeUserProfile = async (user) => {
   const userRef = doc(db, 'users', user.uid);

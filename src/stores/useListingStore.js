@@ -5,6 +5,12 @@ const useListingStore = create((set) => ({
   searchResults: [],
   currentListing: null,
   isEditModalOpen: false,
+  listings: [],
+  setListings: (listings) => set({ listings }),
+  removeListingById: (id) =>
+    set((state) => ({
+      listings: state.listings.filter((listing) => listing.id !== id),
+    })),
   setSearchTerm: (term) => set({ searchTerm: term }),
   setSearchResults: (results) => set({ searchResults: results }),
   setCurrentListing: (listing) => set({ currentListing: listing }),

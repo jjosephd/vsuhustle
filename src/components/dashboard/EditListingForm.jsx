@@ -3,9 +3,18 @@ import { useState, useEffect } from 'react';
 import useListingStore from '../../stores/useListingStore';
 import useListingValidation from '../../hooks/useListingValidation';
 import { categories } from '../../data/categories';
+import ServiceEditor from '../services/ServiceEditor';
+import { deleteListingbyId } from '../../utils/firestore/listings';
+import { toast } from 'react-toastify';
+import errorHandler from '../../utils/error/errorHandler';
 
 const EditListingForm = () => {
-  const { currentListing, setIsEditModalOpen } = useListingStore();
+  const {
+    currentListing,
+    setIsEditModalOpen,
+    clearCurrentListing,
+    removeListingById,
+  } = useListingStore();
   const { errors, validate, resetErrors } = useListingValidation();
 
   const [formData, setFormData] = useState({
@@ -15,6 +24,71 @@ const EditListingForm = () => {
     contactInfo: { email: '', phone: '' },
     servicesOffered: {},
   });
+
+  const [newServiceName, setNewServiceName] = useState('');
+  const [savedServices, setSavedServices] = useState({});
+
+  const [newKeyword, setNewKeyword] = useState('');
+
+  const [deleting, setDeleting] = useState(false);
+
+  const saveService = (serviceName) => {
+    setSavedServices((prev) => ({
+      ...prev,
+      [serviceName]: true,
+    }));
+  };
+
+  const updateServicesOffered = (serviceName, field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      servicesOffered: {
+        ...prev.servicesOffered,
+        [serviceName]: {
+          ...prev.servicesOffered[serviceName],
+          [field]: value,
+        },
+      },
+    }));
+  };
+
+  const addKeyword = () => {
+    if (newKeyword.trim()) {
+      setFormData((prev) => ({
+        ...prev,
+        keywords: [...prev.keywords, newKeyword.trim()],
+      }));
+      setNewKeyword('');
+    }
+  };
+
+  const removeKeyword = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      keywords: prev.keywords.filter((_, i) => i !== index),
+    }));
+  };
+
+  const addService = () => {
+    if (newServiceName.trim()) {
+      setFormData((prev) => ({
+        ...prev,
+        servicesOffered: {
+          ...prev.servicesOffered,
+          [newServiceName.trim()]: { price: 0, duration: 0 },
+        },
+      }));
+      setNewServiceName('');
+    }
+  };
+
+  const removeService = (name) => {
+    const { [name]: _, ...rest } = formData.servicesOffered;
+    setFormData((prev) => ({
+      ...prev,
+      servicesOffered: rest,
+    }));
+  };
 
   useEffect(() => {
     if (currentListing) {
@@ -65,8 +139,28 @@ const EditListingForm = () => {
     // TODO: Submit to Firestore here
     console.log('Submitted data:', formData);
     setIsEditModalOpen(false);
+    toast.success('Listing updated successfully');
   };
 
+  const handleDelete = async (e) => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this listing? This action cannot be undone.'
+    );
+    if (!confirmDelete) return;
+
+    setDeleting(true);
+    try {
+      await deleteListingbyId(currentListing.id);
+      removeListingById(currentListing.id);
+      clearCurrentListing();
+      setIsEditModalOpen(false);
+      toast.success('Listing deleted successfully');
+    } catch (error) {
+      toast.error(errorHandler.general(error, 'Error deleting listing'));
+    } finally {
+      setDeleting(false);
+    }
+  };
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <input
@@ -74,7 +168,7 @@ const EditListingForm = () => {
         value={formData.title}
         onChange={handleChange}
         placeholder="Business Name"
-        className="input input-bordered w-full"
+        className="input w-full"
       />
       {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
 
@@ -125,21 +219,18 @@ const EditListingForm = () => {
       {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
 
       <div>
-        <label className="font-medium">Services Offered</label>
-        <div className="grid grid-cols-2 gap-2 mt-2">
-          {['consulting', 'repair', 'delivery', 'installation'].map(
-            (service) => (
-              <label key={service} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={formData.servicesOffered[service] || false}
-                  onChange={() => handleServiceToggle(service)}
-                />
-                <span>{service}</span>
-              </label>
-            )
-          )}
-        </div>
+        <ServiceEditor
+          listingData={{ servicesOffered: formData.servicesOffered }}
+          savedServices={savedServices}
+          newServiceName={newServiceName}
+          setNewServiceName={setNewServiceName}
+          addService={addService}
+          removeService={removeService}
+          updateServicesOffered={updateServicesOffered}
+          saveService={saveService}
+          formErrors={errors}
+        />
+
         {errors.servicesOffered && (
           <p className="text-red-500 text-sm mt-1">{errors.servicesOffered}</p>
         )}
@@ -147,6 +238,14 @@ const EditListingForm = () => {
 
       <button type="submit" className="btn btn-primary mt-4">
         Save Changes
+      </button>
+      <button
+        type="button"
+        className="btn bg-red-500 text-white mt-2"
+        onClick={handleDelete}
+        disabled={deleting}
+      >
+        {deleting ? 'Deleting...' : 'Remove Business'}
       </button>
     </form>
   );

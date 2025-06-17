@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { getAuth } from 'firebase/auth';
+import { Link } from 'react-router';
 import useUserListings from '../../hooks/useUserListings';
 import errorHandler from '../../utils/error/errorHandler';
 import ListingPanelCard from './ListingPanelCard';
@@ -9,8 +11,21 @@ import EditListingView from './EditListingView';
 const Summary = ({ currentUser }) => {
   const auth = getAuth();
   const user = auth.currentUser;
-  const { listings, loading, error } = useUserListings(user?.uid);
-  const { isEditModalOpen, setIsEditModalOpen } = useListingStore();
+
+  const {
+    listings: fetchedListings,
+    loading,
+    error,
+  } = useUserListings(user?.uid);
+  const { listings, setListings, isEditModalOpen, setIsEditModalOpen } =
+    useListingStore();
+
+  // Sync fetched listings into Zustand
+  useEffect(() => {
+    if (!loading && fetchedListings?.length >= 0) {
+      setListings(fetchedListings);
+    }
+  }, [fetchedListings, loading, setListings]);
 
   const formattedCreatedAt = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -75,9 +90,9 @@ const Summary = ({ currentUser }) => {
 
   return (
     <div className="flex flex-col gap-4 overflow-x-hidden overflow-y-auto p-8">
+      <EditListingView />
       <SummaryHeader />
       <SummaryPanel />
-      <EditListingView />
     </div>
   );
 };

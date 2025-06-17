@@ -12,6 +12,13 @@ const EditListingView = () => {
   } = useListingStore();
 
   const closeModal = () => {
+    if (currentListing) {
+      const confirmExit = window.confirm(
+        'Are you sure you want to exit without saving changes?'
+      );
+      if (!confirmExit) return;
+    }
+
     setIsEditModalOpen(false);
     clearCurrentListing();
   };
