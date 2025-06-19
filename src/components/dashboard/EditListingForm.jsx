@@ -130,16 +130,24 @@ const EditListingForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     resetErrors();
     const validationErrors = validate(formData);
     if (Object.keys(validationErrors).length) return;
 
-    // TODO: Submit to Firestore here
-    console.log('Submitted data:', formData);
-    setIsEditModalOpen(false);
-    toast.success('Listing updated successfully');
+    try {
+      const docRef = doc(db, 'listings', currentListing.id);
+      await updateDoc(docRef, {
+        ...formData,
+        updatedAt: serverTimestamp(),
+      });
+
+      setIsEditModalOpen(false);
+      toast.success('Listing updated successfully');
+    } catch (err) {
+      toast.error(errorHandler.general(err, 'Error updating listing'));
+    }
   };
 
   const handleDelete = async (e) => {
