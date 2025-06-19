@@ -154,23 +154,7 @@ const EditListingForm = () => {
       removeListingById(currentListing.id);
       clearCurrentListing();
       setIsEditModalOpen(false);
-      toast(
-        ({ closeToast }) => (
-          <div className="flex items-center gap-2">
-            <span className="text-green-500">✅</span>
-            <span>Listing deleted</span>
-            <button
-              onClick={closeToast}
-              className="ml-auto text-sm text-gray-300 rounded-2xl"
-            >
-              Dismiss
-            </button>
-          </div>
-        ),
-        {
-          position: 'bottom-center',
-        }
-      );
+      toast.success('Listing deleted successfully');
     } catch (error) {
       toast.error(errorHandler.general(error, 'Error deleting listing'));
     } finally {
