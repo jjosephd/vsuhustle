@@ -67,7 +67,7 @@ const Navbar = () => {
               >
                 <FaRegUserCircle className="text-xl" />
                 <span className="hidden sm:inline text-sm">
-                  {currentUser.name ||
+                  {currentUser.displayName ||
                     currentUser.email?.split('@')[0] ||
                     'Account'}
                 </span>
@@ -86,7 +86,7 @@ const Navbar = () => {
                 >
                   <div className="px-4 py-3 border-b border-gray-100">
                     <div className="text-sm font-medium text-gray-900 truncate">
-                      {currentUser.name || 'User'}
+                      {currentUser.displayName || 'User'}
                     </div>
                     <div className="text-xs text-gray-500 truncate">
                       {currentUser.email}

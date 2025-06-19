@@ -154,29 +154,50 @@ export const deleteListingbyId = async (listingId) => {
   }
 };
 
+/**
+ * Initializes a Firestore user profile if it doesn't already exist.
+ *
+ * @param {object} user - The Firebase Auth user object.
+ * @throws Will throw an error if required user fields are missing.
+ */
 export const initializeUserProfile = async (user) => {
+  if (!user || !user.uid || !user.email) {
+    throw new Error('Invalid user object passed to initializeUserProfile');
+  }
+
   const userRef = doc(db, 'users', user.uid);
-  const snap = await getDoc(userRef);
+  const userSnap = await getDoc(userRef);
 
-  const creationTime = user.metadata?.creationTime
-    ? new Date(user.metadata.creationTime)
-    : new Date();
+  if (userSnap.exists()) return; // Profile already initialized
 
-  if (!snap.exists()) {
-    // Count reviews they've written
+  // Use server timestamp as fallback
+  const createdAt =
+    user.metadata?.creationTime && !isNaN(new Date(user.metadata.creationTime))
+      ? new Date(user.metadata.creationTime)
+      : serverTimestamp();
+
+  let reviewsGiven = 0;
+  try {
     const q = query(
       collection(db, 'reviews'),
       where('reviewerId', '==', user.uid)
     );
     const reviewSnapshot = await getDocs(q);
-
-    await setDoc(userRef, {
-      email: user.email,
-      servicesUsed: 0,
-      reviewsGiven: reviewSnapshot.size,
-      createdAt: creationTime,
-    });
+    reviewsGiven = reviewSnapshot.size;
+  } catch (err) {
+    console.warn('Failed to count user reviews:', err.message);
   }
+
+  // Profile fields
+  const userProfile = {
+    email: user.email,
+    displayName: user.displayName || '',
+    servicesUsed: 0,
+    reviewsGiven,
+    createdAt,
+  };
+
+  await setDoc(userRef, userProfile);
 };
 
 export const incrementServicesUsed = async (uid) => {

@@ -8,10 +8,13 @@ import { auth } from '../../firebase';
 import { Link } from 'react-router';
 import { useNavigate } from 'react-router';
 import errorHandler from '../../utils/error/errorHandler';
+import { updateProfile } from 'firebase/auth';
+import { initializeUserProfile } from '../../utils/firestore/listings';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState('');
@@ -29,17 +32,20 @@ const Login = () => {
           email,
           password
         );
-        console.log('✅ Registration successful:', userCredential.user);
-      } else {
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
+
+        const user = userCredential.user;
+
+        // Set Firebase Auth displayName (optional, here using email prefix)
+        const nameFromEmail = email.split('@')[0];
+        await updateProfile(user, {
+          displayName,
+        });
+
+        // Initialize Firestore user profile
+        await initializeUserProfile(user);
+
+        console.log('✅ Registration successful:', user);
         navigate('/businesses');
-        console.log('✅ Login successful:');
-        console.log('  UID:', userCredential.user.uid);
-        console.log('  Email:', userCredential.user.email);
       }
     } catch (err) {
       errorHandler.firebase(
@@ -56,6 +62,16 @@ const Login = () => {
         {isRegister ? 'Register' : 'Login'}
       </h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        {isRegister && (
+          <input
+            className="border p-2"
+            type="text"
+            placeholder="Display Name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            required
+          />
+        )}
         <input
           className="border p-2"
           type="email"
