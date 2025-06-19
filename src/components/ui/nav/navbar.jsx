@@ -67,9 +67,7 @@ const Navbar = () => {
               >
                 <FaRegUserCircle className="text-xl" />
                 <span className="hidden sm:inline text-sm">
-                  {currentUser.displayName ||
-                    currentUser.email?.split('@')[0] ||
-                    'Account'}
+                  {currentUser.displayName}
                 </span>
                 <FaChevronDown
                   className={`text-xs transition-transform duration-200 ${
@@ -86,7 +84,7 @@ const Navbar = () => {
                 >
                   <div className="px-4 py-3 border-b border-gray-100">
                     <div className="text-sm font-medium text-gray-900 truncate">
-                      {currentUser.displayName || 'User'}
+                      {currentUser.displayName}
                     </div>
                     <div className="text-xs text-gray-500 truncate">
                       {currentUser.email}
@@ -187,9 +185,7 @@ const Navbar = () => {
               >
                 <FaRegUserCircle className="text-xl" />
                 <span className="hidden sm:inline text-sm">
-                  {currentUser.name ||
-                    currentUser.email?.split('@')[0] ||
-                    'Account'}
+                  {currentUser.displayName}
                 </span>
                 <FaChevronDown
                   className={`text-xs transition-transform duration-200 ${
@@ -209,7 +205,7 @@ const Navbar = () => {
                   {/* User Info */}
                   <div className="px-4 py-3 border-b border-gray-100">
                     <div className="text-sm font-medium text-gray-900 truncate">
-                      {currentUser.name || 'User'}
+                      {currentUser.displayName}
                     </div>
                     <div className="text-xs text-gray-500 truncate">
                       {currentUser.email}
