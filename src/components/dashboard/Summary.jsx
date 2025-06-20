@@ -40,7 +40,7 @@ const Summary = () => {
   );
 
   return (
-    <div className="flex flex-col gap-4 overflow-x-hidden overflow-y-auto p-8">
+    <div className="flex flex-col justify-center items-center sm:block gap-4 overflow-x-hidden overflow-y-auto p-8">
       <EditListingView />
       <SummaryHeader />
       <SummaryPanel
