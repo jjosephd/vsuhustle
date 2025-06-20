@@ -13,11 +13,6 @@ import {
   serverTimestamp,
   deleteDoc,
   Timestamp,
-  startAfter,
-  limit,
-  startBefore,
-  endBefore,
-  endAfter,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 

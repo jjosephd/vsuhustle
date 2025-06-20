@@ -6,16 +6,18 @@ const useListingStore = create((set) => ({
   currentListing: null,
   isEditModalOpen: false,
   listings: [],
-  setListings: (listings) => set({ listings }),
-  removeListingById: (id) =>
-    set((state) => ({
-      listings: state.listings.filter((listing) => listing.id !== id),
-    })),
+  bookings: [],
   setSearchTerm: (term) => set({ searchTerm: term }),
   setSearchResults: (results) => set({ searchResults: results }),
   setCurrentListing: (listing) => set({ currentListing: listing }),
   clearCurrentListing: () => set({ currentListing: null }),
   setIsEditModalOpen: (val) => set({ isEditModalOpen: val }),
+  setListings: (listings) => set({ listings }),
+  setBookings: (bookings) => set({ bookings }),
+  removeListingById: (id) =>
+    set((state) => ({
+      listings: state.listings.filter((listing) => listing.id !== id),
+    })),
   resetSearch: () =>
     set({
       searchTerm: '',
