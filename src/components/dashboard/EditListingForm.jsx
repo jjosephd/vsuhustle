@@ -7,7 +7,8 @@ import ServiceEditor from '../services/ServiceEditor';
 import { deleteListingbyId } from '../../utils/firestore/listings';
 import { toast } from 'react-toastify';
 import errorHandler from '../../utils/error/errorHandler';
-import { updateDoc } from 'firebase/firestore';
+import { updateDoc, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 const EditListingForm = () => {
   const {
