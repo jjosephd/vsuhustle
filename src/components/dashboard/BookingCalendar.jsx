@@ -3,7 +3,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import errorHandler from '../../utils/error/errorHandler';
 
-const BookingsPanel = ({
+const BookingCalendar = ({
   bookings: fetchedBookings,
   loading: bookingsLoading,
   error: bookingsError,
@@ -25,7 +25,7 @@ const BookingsPanel = ({
       })
     : [];
 
-  const bookedDates = fetchedBookings.map(
+  const bookedDates = (fetchedBookings || []).map(
     (booking) => new Date(booking.startTime.seconds * 1000)
   );
 
@@ -51,6 +51,7 @@ const BookingsPanel = ({
             modifiersClassNames={{
               booked: 'bg-blue-100 rounded-full text-blue-900 font-semibold',
             }}
+            className="text-xs sm:text-lg max-w-xs"
           />
 
           {selectedDay && (
@@ -95,4 +96,4 @@ const BookingsPanel = ({
   );
 };
 
-export default BookingsPanel;
+export default BookingCalendar;

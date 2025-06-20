@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import errorHandler from '../../utils/error/errorHandler';
 import ListingPanelCard from './ListingPanelCard';
 import AnalyticsPanel from './AnalyticsPanel';
-import BookingsPanel from './BookingsPanel';
+import BookingCalendar from './BookingCalendar';
 import useListingStore from '../../stores/useListingStore';
 import useUserBookings from '../../hooks/useUserBookings';
 
@@ -39,7 +39,7 @@ const SummaryPanel = ({ currentUser, listings = [], loading, error }) => {
       {/* Bookings */}
       <section id="bookings">
         <h1 className="text-2xl">Current Bookings</h1>
-        <BookingsPanel
+        <BookingCalendar
           bookings={fetchedBookings}
           loading={bookingsLoading}
           error={bookingsError}
