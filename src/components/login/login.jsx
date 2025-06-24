@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router';
 import errorHandler from '../../utils/error/errorHandler';
 import { updateProfile } from 'firebase/auth';
 import { initializeUserProfile } from '../../utils/firestore/listings';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -44,8 +45,20 @@ const Login = () => {
         // Initialize Firestore user profile
         await initializeUserProfile(user);
 
-        console.log('✅ Registration successful:', user);
-        navigate('/businesses');
+        toast.success('Registration successful');
+
+        setTimeout(() => navigate('/businesses'), 100);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        toast.success('Login successful', {
+          position: 'top-center',
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false, // Better for mobile
+          draggable: true,
+        });
+
+        setTimeout(() => navigate('/businesses'), 1000);
       }
     } catch (err) {
       errorHandler.firebase(

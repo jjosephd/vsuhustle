@@ -72,7 +72,7 @@ const SummaryPanel = ({ currentUser, listings = [], loading, error }) => {
       </section>
 
       {/* Analytics */}
-      <section id="my-analytics" className="mt-6">
+      <section id="analytics" className="mt-6">
         <h1 className="text-2xl">Analytics</h1>
         <AnalyticsPanel />
       </section>

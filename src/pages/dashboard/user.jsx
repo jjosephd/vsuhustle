@@ -17,15 +17,24 @@ const User = () => {
 
   const navLinks = [
     {
+      name: 'Bookings',
+      to: 'bookings',
+      spy: true,
+      smooth: true,
+      duration: 500,
+    },
+    {
       name: 'My Listings',
       to: 'my-listings',
       spy: true,
       smooth: true,
       duration: 500,
     },
+
+    { name: 'Reviews', to: 'reviews', spy: true, smooth: true, duration: 500 },
     {
-      name: 'Bookings',
-      to: 'bookings',
+      name: 'Analytics',
+      to: 'analytics',
       spy: true,
       smooth: true,
       duration: 500,
@@ -37,22 +46,14 @@ const User = () => {
       smooth: true,
       duration: 500,
     },
-    { name: 'Reviews', to: 'reviews', spy: true, smooth: true, duration: 500 },
-    {
-      name: 'Analytics',
-      to: 'analytics',
-      spy: true,
-      smooth: true,
-      duration: 500,
-    },
   ];
 
   return (
     <div className=" min-h-screen">
       <div className="flex flex-col md:flex-row bg-base-200">
         {/* Mobile Header / Desktop Sidebar */}
-        <div className="w-full md:w-1/3 lg:w-1/4  md:fixed md:h-screen ">
-          <div className="flex flex-row md:flex-col items-center md:items-start p-4 gap-4">
+        <div className=" px-8 py-4 w-full md:w-1/3 lg:w-1/4  md:fixed md:h-screen ">
+          <div className="flex flex-row md:flex-col items-center md:items-start gap-4">
             {/* Profile Image */}
             <div className="w-16 h-16 md:w-[150px] md:h-[150px] lg:w-[200px] lg:h-[200px] flex-shrink-0 overflow-hidden rounded-lg">
               <img
@@ -64,9 +65,9 @@ const User = () => {
             </div>
 
             {/* User Info */}
-            <div className="flex-1 md:w-full text-left md:text-center lg:text-left">
+            <div className="flex-1 md:w-full text-left">
               <div className="text-lg md:text-xl lg:text-2xl font-semibold truncate">
-                Username
+                {currentUser.displayName}
               </div>
               <div className="text-sm md:text-base text-gray-600 truncate">
                 {currentUser.email}
@@ -79,7 +80,7 @@ const User = () => {
           </div>
 
           {/* Navigation Links */}
-          <div className="px-4 pb-4 md:py-8">
+          <div className="pb-4 md:py-8">
             <div className="flex flex-row md:flex-col gap-2 md:gap-0 overflow-x-auto md:overflow-x-visible">
               {navLinks.map((link, index) => (
                 <ScrollLink
